@@ -2,6 +2,7 @@
 
 angular.module('akurraApp')
   .factory('SoundCloud', function ($rootScope) {
+    var searchCount = 0;
     var debouncedSearch = _.debounce(function (query) {
       if (query) {
         SC.get('/tracks', { q: query, limit: 200 }, function(tracks) {
@@ -13,7 +14,8 @@ angular.module('akurraApp')
           });
         });
       }
-    }, 250, false);
+      console.log(searchCount++);
+    }, 150, false);
 
     var that;
     var SoundCloud = function () {

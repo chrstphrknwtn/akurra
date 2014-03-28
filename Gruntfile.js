@@ -1,4 +1,4 @@
-// Generated on 2014-03-28 using generator-angular-fullstack 1.3.2
+// Generated on 2014-03-28 using generator-angular-fullstack 1.2.7
 'use strict';
 
 // # Globbing
@@ -54,17 +54,13 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      mochaTest: {
-        files: ['test/server/{,*/}*.js'],
-        tasks: ['mochaTest']
-      },
       jsTest: {
-        files: ['test/client/spec/{,*/}*.js'],
+        files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
+      compass: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -111,9 +107,9 @@ module.exports = function (grunt) {
       ],
       test: {
         options: {
-          jshintrc: 'test/client/.jshintrc'
+          jshintrc: 'test/.jshintrc'
         },
-        src: ['test/client/spec/{,*/}*.js']
+        src: ['test/spec/{,*/}*.js']
       }
     },
 
@@ -124,9 +120,9 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*',
-            '!<%= yeoman.dist %>/Procfile'
+            '<%= yeoman.dist %>/views/*',
+            '<%= yeoman.dist %>/public/*',
+            '!<%= yeoman.dist %>/public/.git*',
           ]
         }]
       },
@@ -158,45 +154,40 @@ module.exports = function (grunt) {
       }
     },
 
-    // Debugging with node inspector
-    'node-inspector': {
-      custom: {
-        options: {
-          'web-host': 'localhost'
-        }
-      }
-    },
-
-    // Use nodemon to run server in debug mode with an initial breakpoint
-    nodemon: {
-      debug: {
-        script: 'server.js',
-        options: {
-          nodeArgs: ['--debug-brk'],
-          env: {
-            PORT: process.env.PORT || 9000
-          },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
-              console.log(event.colour);
-            });
-
-            // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
-                require('open')('http://localhost:8080/debug?port=5858');
-              }, 500);              
-            });
-          }
-        }
-      }
-    },
-
     // Automatically inject Bower components into the app
     'bower-install': {
       app: {
         html: '<%= yeoman.app %>/views/index.html',
         ignorePath: '<%= yeoman.app %>/'
+      }
+    },
+
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.app %>/styles',
+        cssDir: '.tmp/styles',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: '<%= yeoman.app %>/images',
+        javascriptsDir: '<%= yeoman.app %>/scripts',
+        fontsDir: '<%= yeoman.app %>/styles/fonts',
+        importPath: '<%= yeoman.app %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: '<%= yeoman.dist %>/public/images/generated'
+        }
+      },
+      server: {
+        options: {
+          debugInfo: true
+        }
       }
     },
 
@@ -342,22 +333,13 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'copy:styles'
+        'compass:server'
       ],
       test: [
-        'copy:styles'
+        'compass'
       ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
       dist: [
-        'copy:styles',
+        'compass:dist',
         'imagemin',
         'svgmin',
         'htmlmin'
@@ -396,19 +378,6 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
-    },
-
-    mochaTest: {
-      options: {
-        reporter: 'spec'
-      },
-      src: ['test/server/**/*.js']
-    },
-
-    env: {
-      test: {
-        NODE_ENV: 'test'
-      }
     }
   });
 
@@ -433,16 +402,6 @@ module.exports = function (grunt) {
       return grunt.task.run(['build', 'express:prod', 'open', 'express-keepalive']);
     }
 
-    if (target === 'debug') {
-      return grunt.task.run([
-        'clean:server',
-        'bower-install',
-        'concurrent:server',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
-    }
-
     grunt.task.run([
       'clean:server',
       'bower-install',
@@ -459,32 +418,12 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
 
-  grunt.registerTask('test', function(target) {
-    if (target === 'server') {
-      return grunt.task.run([
-        'env:test',
-        'mochaTest'
-      ]);
-    }
-
-    if (target === 'client') {
-      return grunt.task.run([
-        'clean:server',
-        'concurrent:test',
-        'autoprefixer',
-        'karma'
-      ]);
-    }
-
-    grunt.task.run([
-      'env:test',
-      'mochaTest',
-      'clean:server',
-      'concurrent:test',
-      'autoprefixer',
-      'karma'
-    ]);
-  });  
+  grunt.registerTask('test', [
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'karma'
+  ]);
 
   grunt.registerTask('build', [
     'clean:dist',
