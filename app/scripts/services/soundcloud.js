@@ -15,7 +15,7 @@ angular.module('akurraApp')
         });
       }
       console.log(searchCount++);
-    }, 150, false);
+    }, 1000, false);
 
     var that;
     var SoundCloud = function () {

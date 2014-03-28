@@ -3,13 +3,13 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express')
-  , config = require('./lib/config/config')
+  , config = require('./server/config/config')
   , http = require('http')
   , racer = require('racer');
 
 
 // DB Setup
-var store = require('./lib/config/racer')(racer);
+var store = require('./server/config/racer')(racer);
 
 // console.log(racer.init.toString());
 
@@ -17,10 +17,10 @@ var store = require('./lib/config/racer')(racer);
 var app = express();
 
 // Express settings
-require('./lib/config/express')(app, store);
+require('./server/config/express')(app, store);
 
 // Routing
-require('./lib/routes')(app);
+require('./server/routes')(app);
 
 
 // Start server
