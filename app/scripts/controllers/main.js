@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('MainCtrl', function ($scope, $collection, $location, $filter, Playlist, SoundCloud, Player, Keys) {
+  .controller('MainCtrl', function ($scope, $location, $filter, Playlist, SoundCloud, Player, Keys) {
     Player.init();
     Keys.get(function (keys) {
       SoundCloud.init(keys);
