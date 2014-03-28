@@ -1,24 +1,27 @@
 'use strict';
 
-var express = require('express');
-
-/**
- * Main application file
- */
-
-// Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Application Config
-var config = require('./lib/config/config');
+var express = require('express')
+  , config = require('./lib/config/config')
+  , http = require('http')
+  , racer = require('racer');
 
+
+// DB Setup
+var store = require('./lib/config/racer')(racer);
+
+console.log(racer.init.toString());
+
+// Application Config
 var app = express();
 
 // Express settings
-require('./lib/config/express')(app);
+require('./lib/config/express')(app, store);
 
 // Routing
 require('./lib/routes')(app);
+
 
 // Start server
 app.listen(config.port, function () {
