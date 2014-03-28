@@ -19,6 +19,9 @@
   "trailing": true,
   "smarttabs": true,
   "globals": {
-    "angular": false
+    "angular": false,
+    "SC": false,
+    "_": false,
+    "soundManager": false
   }
 }
