@@ -7,7 +7,7 @@ angular.module('akurraApp')
 
     };
     Player.prototype.init = function() {
-     soundManager.setup({});
+      soundManager.setup({});
     };
     Player.prototype.stop = function() {
       // stop

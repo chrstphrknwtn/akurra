@@ -11,7 +11,7 @@ var express = require('express')
 // DB Setup
 var store = require('./lib/config/racer')(racer);
 
-console.log(racer.init.toString());
+// console.log(racer.init.toString());
 
 // Application Config
 var app = express();
