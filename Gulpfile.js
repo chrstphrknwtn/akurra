@@ -41,7 +41,8 @@ gulp.task('deleteTemp', function () {
 });
 
 gulp.task('sass', ['deleteTemp'], function () {
-  return gulp.src('app/styles/**/*.scss')
+  return gulp.src('app/styles/main.scss')
+  // return gulp.src('app/styles/**/*.scss')
     .pipe(sass({
       loadPath: ['app/bower_components']
     })
