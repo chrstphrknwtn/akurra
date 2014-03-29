@@ -43,8 +43,10 @@ gulp.task('deleteTemp', function () {
 gulp.task('sass', ['deleteTemp'], function () {
   return gulp.src('app/styles/**/*.scss')
     .pipe(sass({
-      loadPath: ['app/bower_components'],
-      quiet: true
+      loadPath: ['app/bower_components']
+    })
+    .on('error', function (data) {
+
     }))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe(refresh(livereloadServer));
@@ -99,7 +101,7 @@ function onNodeServerRestart(files) {
 }
 
 gulp.task('startNode', ['gulpfile', 'deleteTemp', 'sass', 'clientJs', 'serverJs'], function (callback) {
-  nodemon('-w lib server.js')
+  nodemon('-w server server.js')
     .on('restart', onNodeServerRestart)
     .on('log', onNodeServerLog);
 
