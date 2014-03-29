@@ -45,11 +45,11 @@ $greyLight: #d1d1d1;
 
 body {
   background: #ffffff;
-  font-family: 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
   color: #333333;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  //padding-top: 50px;
 }
 
 * { box-sizing: border-box }
@@ -105,8 +105,10 @@ a {
       }
     }
   }
+}
 
-  .search-results-grid {
+.search {
+  .results-grid {
     //box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
     //border-top: 1px solid #e1e1e1;
 

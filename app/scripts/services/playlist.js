@@ -25,12 +25,10 @@ angular.module('akurraApp')
       if (isDuplicate(newTrack)) {
         return false;
       }
+      this.tracks.push(newTrack);
       if (!Player.isPlaying) {
         Player.playTrack(newTrack);
       }
-      // $scope.$apply(function () {
-      this.tracks.push(newTrack);
-      // });
       return true;
     };
     Playlist.prototype.removeTrack = function (track) {

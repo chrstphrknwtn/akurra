@@ -1,31 +1,9 @@
 <div ng-controller="MainCtrl">
 
-  <section class="playlist">
-    <div class="track" ng-repeat="track in playlist.tracks">
-      <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | 500 }}" alt="">
-
-      <section class="track-details">
-        <h3 class="title">{{ track.title }}</h3>
-        <h4 class="artist">{{ track.user.username }}</h4>
-
-        <section class="track-progress">
-          <div class="progress-bar loaded" style="width:{{ player.loadingProgress | normalizedToPercentage }}"></div>
-          <div class="progress-bar played" style="width:{{ player.progress | normalizedToPercentage }}"></div>
-        </section>
-
-        <div class="track-times">
-          <span class="elapsed">{{ player.position | msToDuration }}</span>
-          <span class="duration">{{ track.duration | msToDuration }}</span>
-        </div>
-      </section>
-
-    </div>
-  </section>
-
-  <section class="playlist-controls">
-    <a class="mute-button" ng-class="{muted: isMuted}" ng-click="player.stop()" ng-show="playlist.tracks.length"></a>
-  </section>
+  <section class="search" ng-include="'partials/search-input'" ng-controller="SearchCtrl"></section>
   
-  <section class="search" ng-include="'partials/search'" ng-controller="SearchCtrl"></section>
+  <section class="playlist" ng-include="'partials/playlist'" ng-controller="PlaylistCtrl"></section>
+  
+  <section class="search" ng-include="'partials/search-results'" ng-controller="SearchCtrl"></section>
 
 </div>

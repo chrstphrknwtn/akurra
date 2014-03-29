@@ -10,13 +10,13 @@ angular.module('akurraApp')
         SoundCloud.init(keys);
       });
 
-    var path = $location.path().substr(1);
+    // var path = $location.path().substr(1);
 
-    if (!!path) {
-      Playlist.createOrJoin(path);
-    } else {
-      // show how to create playlist or create random playlist?
-    }
+    // if (!!path) {
+    //   Playlist.createOrJoin(path);
+    // } else {
+    //   // show how to create playlist or create random playlist?
+    // }
 
     $scope.soundCloud = SoundCloud;
     $scope.player = Player;

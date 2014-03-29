@@ -21,7 +21,9 @@ angular.module('akurraApp')
     // Public API
     // ------------------------------------------------------------------------
     Player.prototype.init = function () {
-      soundManager.setup({});
+      soundManager.setup({
+        debugMode: false
+      });
     };
     Player.prototype.playTrack = function (track) {
       soundManager.createSound({

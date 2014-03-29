@@ -1,11 +1,5 @@
-
-<!-- Search Bar -->
-<div class="input">
-  <input ng-model="query.value" ng-enter="searchNow()" type="text" placeholder="Search Soundcloud" class="{{isSearching.value ? 'searching' : ''}}">
-</div>
-
 <!-- Search Results -->
-<div class="search-results-grid">
+<div class="results-grid">
   <ul>
     <li ng-repeat="track in soundCloud.searchResults" ng-class-odd="'odd'">
       <a href="#" ng-click="playlist.addTrack(track)">
