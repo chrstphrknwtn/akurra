@@ -12,7 +12,7 @@ angular.module('akurraApp')
     Keys.prototype.get = function () {
       return $http.get('/keys.json')
         .success(function (keys) {
-          that = keys;
+          that.soundcloud = keys;
         });
     };
     return new Keys();

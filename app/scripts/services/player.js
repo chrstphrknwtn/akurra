@@ -8,6 +8,7 @@ angular.module('akurraApp')
     // Constructor
     // ------------------------------------------------------------------------
     var Player = function () {
+      _.extend(this, new EventEmitter());
       that = this;
       this.isPlaying = false;
       this.currentTrackId = null;
@@ -57,9 +58,9 @@ angular.module('akurraApp')
         volume: 100
       });
     };
-    Player.prototype.mute = function() {
+    Player.prototype.mute = function () {
       that.isMuted = true;
-      soundManager.toggleMute(currentTrackId);
+      // soundManager.toggleMute(currentTrackId);
     };
     return new Player();
   });

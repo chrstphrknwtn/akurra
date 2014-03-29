@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('MainCtrl', function ($scope, $location, $filter, Playlist, SoundCloud, Player, Keys, $timeout) {
+  .controller('MainCtrl', function ($scope, $location, Keys, Playlist, SoundCloud, Player) {
 
     Player.init();
 
@@ -18,22 +18,6 @@ angular.module('akurraApp')
       // show how to create playlist or create random playlist?
     }
 
-
-    $scope.searchTimeout = null;
-    $scope.searchNow = function () {
-      $timeout.cancel($scope.searchTimeout);
-      SoundCloud.search($scope.query);
-    };
-
-    $scope.$watch('query', function (newQuery) {
-      $scope.searchTimeout = $timeout(function () {
-        if (newQuery === $scope.query) {
-          SoundCloud.search(newQuery);
-        }
-      }, 500);
-    });
-
-    $scope.query = null;
     $scope.soundCloud = SoundCloud;
     $scope.player = Player;
     $scope.playlist = Playlist;
