@@ -1,6 +1,7 @@
 {
   "node": false,
   "browser": true,
+  "devel": true,
   "esnext": false,
 
   "bitwise": false,
@@ -30,7 +31,8 @@
     "_": false,
     "angular": false,
     "Modernizr": false,
-    "TweenMax": false
+    "SC": false,
+    "soundManager": false
   }
 }
 

@@ -4,11 +4,11 @@ angular.module('akurraApp')
   .factory('SoundCloud', function ($rootScope) {
     var debouncedSearch = _.debounce(function (query) {
       if (query) {
-        SC.get('/tracks', { q: query, limit: 200 }, function(tracks) {
-          var filteredTracks = _.filter(tracks, function(track){
+        SC.get('/tracks', { q: query, limit: 200 }, function (tracks) {
+          var filteredTracks = _.filter(tracks, function (track) {
             return track.streamable;
           });
-          $rootScope.$apply(function() {
+          $rootScope.$apply(function () {
             that.searchResults = filteredTracks;
           });
         });
@@ -22,10 +22,10 @@ angular.module('akurraApp')
       this.searchResults = [];
     };
 
-    SoundCloud.prototype.init = function(keys) {
+    SoundCloud.prototype.init = function (keys) {
       SC.initialize(keys);
     };
-    SoundCloud.prototype.search = function(query) {
+    SoundCloud.prototype.search = function (query) {
       debouncedSearch(query);
     };
     return new SoundCloud();

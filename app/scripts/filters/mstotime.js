@@ -9,7 +9,7 @@ angular.module('akurraApp')
     function preventNaN(n) {
       return isNaN(n) ? 0 : n;
     }
-    return function(s) {
+    return function (s) {
       time.ms = s % 1000;
       s = (s - time.ms) / 1000;
       time.secs = s % 60;

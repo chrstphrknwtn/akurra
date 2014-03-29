@@ -6,10 +6,10 @@ angular.module('akurraApp')
     var Player = function () {
 
     };
-    Player.prototype.init = function() {
+    Player.prototype.init = function () {
       soundManager.setup({});
     };
-    Player.prototype.stop = function() {
+    Player.prototype.stop = function () {
       // stop
     };
     return new Player();
