@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var util = require('gulp-util');
+var gutil = require('gulp-util');
 var rimraf = require('gulp-rimraf');
 var sass = require('gulp-ruby-sass');
 var jshint = require('gulp-jshint');
@@ -32,7 +32,8 @@ gulp.task('default', ['gulpfile', 'deleteTemp', 'sass', 'serverJs', 'clientJs', 
 gulp.task('gulpfile', function () {
   return gulp.src('gulpfile.js')
     .pipe(jshint('.jshintrcnode'))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter('jshint-stylish'))
+    .on('error', gutil.beep);
 });
 
 gulp.task('deleteTemp', function () {
@@ -46,9 +47,7 @@ gulp.task('sass', ['deleteTemp'], function () {
     .pipe(sass({
       loadPath: ['app/bower_components']
     })
-    .on('error', function (data) {
-
-    }))
+    .on('error', gutil.beep))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe(refresh(livereloadServer));
 });
@@ -56,13 +55,15 @@ gulp.task('sass', ['deleteTemp'], function () {
 gulp.task('serverJs', function () {
   return gulp.src(['lib/**/*.js', 'server.js'])
     .pipe(jshint('.jshintrcnode'))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter('jshint-stylish'))
+    .on('error', gutil.beep);
 });
 
 gulp.task('clientJs', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
+    .on('error', gutil.beep)
     .pipe(refresh(livereloadServer));
 });
 
@@ -83,13 +84,13 @@ function checkAppReady() {
   }
 }
 function onNodeServerLog(log) {
-  console.log(util.colors.white('[') + util.colors.yellow('nodemon') + util.colors.white('] ') + log.message);
+  console.log(gutil.colors.white('[') + gutil.colors.yellow('nodemon') + gutil.colors.white('] ') + log.message);
 }
 function onNodeServerRestart(files) {
   if (files) {
     process.env.NODE_APP_READY = 'false';
     for (var i = 0; i < files.length; i++) {
-      console.log(util.colors.grey('  ' + files[i]));
+      console.log(gutil.colors.grey('  ' + files[i]));
     }
     checkAppReadyInterval = setInterval(function () {
       checkAppReady();
@@ -142,6 +143,7 @@ gulp.task('watch', ['launchProject'], function () {
       .pipe(jshint.reporter('jshint-stylish'));
   });
   gulp.watch('Gulpfile.js', function () {
-    console.log(util.colors.red('\n------------------------\nRestart the Gulp process\n------------------------'));
+    gutil.beep();
+    console.log(gutil.colors.red('\n------------------------\nRestart the Gulp process\n------------------------'));
   });
 });

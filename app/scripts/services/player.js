@@ -11,9 +11,10 @@ angular.module('akurraApp')
       _.extend(this, new EventEmitter());
       that = this;
       this.isPlaying = false;
-      this.currentTrackId = null;
+      this.currentTrack = null;
       this.isMuted = false;
       this.progress = 0;
+      this.loadingProgress = 0;
     };
     // ------------------------------------------------------------------------
     // Public API
@@ -30,32 +31,26 @@ angular.module('akurraApp')
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
         autoLoad: true,
         autoPlay: true,
+        volume: 100,
         whileloading: function () {
-          // var that = this;
-          // $timeout(function () {
-          //   $scope.loadedProgress = {value: ((that.bytesLoaded / that.bytesTotal) * 100 + '%')};
-          // });
+          that.loadingProgress = this.bytesLoaded / this.bytesTotal;
+          that.emit('loadingProgress', this.loadingProgress);
         },
-        onload: function () {
+        whileplaying: function () {
+          that.progress = this.position / this.duration;
         },
         onplay: function () {
           that.isPlaying = true;
-          that.currentTrackId = track.id;
+          that.currentTrack = track;
           that.isMuted = false;
-        },
-        whileplaying: function () {
-          // var that = this;
-          // $timeout(function () {
-          //   $scope.elapsed = {value: that.position};
-          //   $scope.playedProgress = {value: ((that.position / that.duration) * 100 + '%')};
-          // });
+          that.emit('startedPlayback', this.loadingProgress);
         },
         onfinish: function () {
           that.isPlaying = false;
+          that.emit('finishedPlayback', track);
           // removeTrack(track.id);
           // playNextTrack();
-        },
-        volume: 100
+        }
       });
     };
     Player.prototype.mute = function () {
