@@ -32,7 +32,8 @@
     "angular": false,
     "Modernizr": false,
     "SC": false,
-    "soundManager": false
+    "soundManager": false,
+    "EventEmitter": false
   }
 }
 

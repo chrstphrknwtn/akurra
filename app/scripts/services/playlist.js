@@ -2,6 +2,7 @@
 
 angular.module('akurraApp')
   .factory('Playlist', function (SoundCloud, Player) {
+
     var that;
     // ------------------------------------------------------------------------
     // Constructor
@@ -33,14 +34,19 @@ angular.module('akurraApp')
       return true;
     };
     Playlist.prototype.removeTrack = function (track) {
-      // soundManager.destroySound(trackID);
-      //$scope.$apply(function () {
-      this.tracks = _.reject(this.tracks, {'id': track.id});
-      //});
+      var index = this.tracks.indexOf(track);
+      if (index !== -1) {
+        this.tracks.splice(index, 1);
+      }
     };
     // ------------------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------------------
+    Player.on('finishedPlayback', function (track) {
+      that.removeTrack(track);
+      Player.playTrack(that.tracks[0]);
+    });
+
     function isDuplicate(newTrack) {
       return _.find(that.tracks, function (track) {
         return track.id === newTrack.id;
