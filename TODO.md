@@ -1,2 +1,2 @@
-## List of Features to add
+## List of features to add
 ~~move playlist to top~~
