@@ -8,7 +8,7 @@ angular.module('akurraApp')
     // Constructor
     // ------------------------------------------------------------------------
     var Player = function () {
-      _.extend(this, new EventEmitter());
+      _.mixin(this, new EventEmitter());
       that = this;
       this.isPlaying = false;
       this.currentTrack = null;
@@ -36,19 +36,16 @@ angular.module('akurraApp')
         whileloading: function () {
           that.loadingProgress = this.bytesLoaded / this.bytesTotal;
           $rootScope.$apply();
-          // that.emit('loadingProgress', this.loadingProgress);
         },
         whileplaying: function () {
           that.progress = this.position / this.duration;
           that.position = this.position;
           $rootScope.$apply();
-          // that.emit('progress', this.progress);
         },
         onplay: function () {
           that.isPlaying = true;
           that.currentTrack = track;
           that.isMuted = false;
-          // that.emit('startedPlayback', this.loadingProgress);
         },
         onfinish: function () {
           that.isPlaying = false;

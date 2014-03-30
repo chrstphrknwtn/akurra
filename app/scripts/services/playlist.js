@@ -41,8 +41,10 @@ angular.module('akurraApp')
     // Private helpers
     // ------------------------------------------------------------------------
     Player.on('finishedPlayback', function (track) {
-      //that.removeTrack(track);
-      Player.playTrack(that.tracks[0]);
+      that.removeTrack(track);
+      if (that.tracks.length) {
+        Player.playTrack(that.tracks[0]);
+      }
     });
 
     function isDuplicate(newTrack) {

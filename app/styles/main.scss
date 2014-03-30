@@ -108,8 +108,6 @@ a {
     list-style: none;
     padding: 0;
     margin: 0 auto;
-    @include clearfix;
-    // background: black;
     li {
       display: block;
       float: left;
@@ -171,3 +169,43 @@ a {
     }
   }
 }
+
+.track-progress {
+        position: relative;
+        margin: 0 0 4px 0;
+
+        .progress-bar {
+          position: relative;
+          width: 0%;
+          height: 2px;
+          border-radius: 5px;
+
+          &.loaded {
+            background: rgba(0,0,0,0.2);
+            transition: width 0.5s ease;
+          }
+          &.played {
+            margin-top: -2px;
+            background: $purple; /* Old browsers */
+            background: -webkit-gradient(linear, left top, right top, color-stop(0%,$purple), color-stop(100%,$pink)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(left,  $purple 0%, $pink 100%); /* Chrome10+,Safari5.1+ */
+            background:    -moz-linear-gradient(left,  $purple 0%, $pink 100%); /* FF3.6+ */
+            background:     -ms-linear-gradient(left,  $purple 0%, $pink 100%); /* IE10+ */
+            background:      -o-linear-gradient(left,  $purple 0%, $pink 100%); /* Opera 11.10+ */
+            background:         linear-gradient(to right,  $purple 0%,$pink 100%); /* W3C */
+            transition: width 0.01s ease;
+          }
+        }
+      }
+
+      .track-times {
+        font-size: 10px;
+        color: #888;
+
+        .elapsed {
+          float: left;
+        }
+        .duration {
+          float: right;
+        }
+      }

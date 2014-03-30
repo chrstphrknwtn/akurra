@@ -1,0 +1,9 @@
+<section class="track-progress">
+  <div class="progress-bar loaded" style="width:{{ player.loadingProgress | normalizedToPercentage }}"></div>
+  <div class="progress-bar played" style="width:{{ player.progress | normalizedToPercentage }}"></div>
+</section>
+
+<div class="track-times">
+  <span class="elapsed">{{ player.position | msToDuration }}</span>
+  <span class="duration">{{ player.currentTrack.duration | msToDuration }}</span>
+</div>
