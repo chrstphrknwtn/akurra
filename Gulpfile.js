@@ -1,23 +1,22 @@
 'use strict';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var rimraf = require('gulp-rimraf');
-var sass = require('gulp-ruby-sass');
-var jshint = require('gulp-jshint');
-var refresh = require('gulp-livereload');
+var gulp    = require('gulp')
+  , gutil   = require('gulp-util')
+  , rimraf  = require('gulp-rimraf')
+  , sass    = require('gulp-ruby-sass')
+  , jshint  = require('gulp-jshint')
+  , refresh = require('gulp-livereload')
+  , prefix  = require('gulp-autoprefixer')
 
-var fs = require('fs');
-var nodemon = require('nodemon');
+  , fs      = require('fs')
+  , nodemon = require('nodemon')
+  , http    = require('http')
+  , openURL = require('open')
+  , tinylr  = require('tiny-lr');
 
-var http = require('http');
-var openURL = require('open');
-var tinylr = require('tiny-lr');
 
 var livereloadServer = tinylr();
-
 var checkAppReadyInterval;
-
 var HTTP_HOST = 'localhost';
 var HTTP_PORT = 3000;
 var LIVERELOAD_PORT = 35729;
@@ -48,6 +47,7 @@ gulp.task('sass', ['deleteTemp'], function () {
       loadPath: ['app/bower_components']
     })
     .on('error', gutil.beep))
+    .pipe(prefix('last 2 versions'))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe(refresh(livereloadServer));
 });

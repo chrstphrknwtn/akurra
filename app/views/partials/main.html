@@ -1,8 +1,8 @@
 <div ng-controller="MainCtrl">
 
-  <section class="search" ng-include="'partials/search-input'" ng-controller="SearchCtrl"></section>
-  
   <section class="playlist" ng-include="'partials/playlist'" ng-controller="PlaylistCtrl"></section>
+  <section id="search-bar" ng-include="'partials/search-bar'" ng-controller="SearchCtrl"></section>
+  
   
   <section class="search" ng-include="'partials/search-results'" ng-controller="SearchCtrl"></section>
 

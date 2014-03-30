@@ -31,7 +31,8 @@ angular.module('akurraApp')
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
         autoLoad: true,
         autoPlay: true,
-        volume: 100,
+        volume: 0,
+        // volume: 100,
         whileloading: function () {
           that.loadingProgress = this.bytesLoaded / this.bytesTotal;
           $rootScope.$apply();

@@ -17,4 +17,12 @@ angular.module('akurraApp', [
       });
 
     $locationProvider.html5Mode(true);
+  })
+  .run(function (Keys, SoundCloud, Player) {
+    Player.init();
+
+    Keys.get()
+      .success(function (keys) {
+        SoundCloud.init(keys);
+      });
   });

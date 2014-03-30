@@ -3,7 +3,7 @@
   <ul>
     <li ng-repeat="track in soundCloud.searchResults" ng-class-odd="'odd'">
       <a href="#" ng-click="playlist.addTrack(track)">
-        <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | 300 }}" alt="">
+        <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | scArtwork:300 }}" alt="">
         <div class="type-wrapper">
           <div class="result-details">
             <span class="title">{{ track.title }}</span>

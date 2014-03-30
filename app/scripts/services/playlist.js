@@ -41,7 +41,7 @@ angular.module('akurraApp')
     // Private helpers
     // ------------------------------------------------------------------------
     Player.on('finishedPlayback', function (track) {
-      that.removeTrack(track);
+      //that.removeTrack(track);
       Player.playTrack(that.tracks[0]);
     });
 

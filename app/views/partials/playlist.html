@@ -1,7 +1,7 @@
 <div class="track" ng-repeat="track in playlist.tracks">
-  <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | 500 }}" alt="">
+  <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | scArtwork:500 }}" alt="">
 
-  <section class="track-details">
+  <!-- <section class="track-details">
     <h3 class="title">{{ track.title }}</h3>
     <h4 class="artist">{{ track.user.username }}</h4>
 
@@ -14,6 +14,6 @@
       <span class="elapsed">{{ player.position | msToDuration }}</span>
       <span class="duration">{{ track.duration | msToDuration }}</span>
     </div>
-  </section>
+  </section> -->
 
 </div>

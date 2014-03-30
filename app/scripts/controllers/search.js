@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('SearchCtrl', function ($scope, $http, SoundCloud, $timeout) {
+  .controller('SearchCtrl', function ($scope, $http, SoundCloud, $timeout, Playlist) {
 
     var searchTimeout = null;
 
@@ -21,5 +21,6 @@ angular.module('akurraApp')
         }
       }, 500);
     });
-
+    $scope.soundCloud = SoundCloud;
+    $scope.playlist = Playlist;
   });
