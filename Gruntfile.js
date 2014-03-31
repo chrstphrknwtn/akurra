@@ -98,7 +98,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          jshintrc: 'server/.jshintrc'
+          jshintrc: '.jshintrcnode'
         },
         src: [ 'server/{,*/}*.js']
       },

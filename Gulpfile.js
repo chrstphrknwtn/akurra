@@ -1,18 +1,18 @@
 'use strict';
 
-var gulp    = require('gulp')
-  , gutil   = require('gulp-util')
-  , rimraf  = require('gulp-rimraf')
-  , sass    = require('gulp-ruby-sass')
-  , jshint  = require('gulp-jshint')
-  , refresh = require('gulp-livereload')
-  , prefix  = require('gulp-autoprefixer')
+var gulp     = require('gulp')
+  , gutil    = require('gulp-util')
+  , rimraf   = require('gulp-rimraf')
+  , sass     = require('gulp-ruby-sass')
+  , jshint   = require('gulp-jshint')
+  , refresh  = require('gulp-livereload')
+  , prefix   = require('gulp-autoprefixer')
 
-  , fs      = require('fs')
-  , nodemon = require('nodemon')
-  , http    = require('http')
-  , openURL = require('open')
-  , tinylr  = require('tiny-lr');
+  , fs       = require('fs')
+  , nodemon  = require('nodemon')
+  , http     = require('http')
+  , openURL  = require('open')
+  , tinylr   = require('tiny-lr');
 
 
 var livereloadServer = tinylr();
@@ -32,7 +32,7 @@ gulp.task('gulpfile', function () {
   return gulp.src('gulpfile.js')
     .pipe(jshint('.jshintrcnode'))
     .pipe(jshint.reporter('jshint-stylish'))
-    .on('error', gutil.beep);
+    .pipe(jshint.reporter('fail').on('error', gutil.beep));
 });
 
 gulp.task('deleteTemp', function () {
@@ -43,28 +43,25 @@ gulp.task('deleteTemp', function () {
 gulp.task('sass', ['deleteTemp'], function () {
   return gulp.src('app/styles/main.scss')
   // return gulp.src('app/styles/**/*.scss')
-    .pipe(sass({
-      loadPath: ['app/bower_components']
-    })
-    .on('error', gutil.beep))
-    .pipe(prefix('last 2 versions'))
+    .pipe(sass({loadPath: ['app/bower_components']}).on('error', gutil.beep))
+    .pipe(prefix('last 2 versions').on('error', function () {}))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe(refresh(livereloadServer));
 });
 
 gulp.task('serverJs', function () {
-  return gulp.src(['lib/**/*.js', 'server.js'])
+  return gulp.src(['server/**/*.js', 'server.js'])
     .pipe(jshint('.jshintrcnode'))
     .pipe(jshint.reporter('jshint-stylish'))
-    .on('error', gutil.beep);
+    .pipe(jshint.reporter('fail').on('error', gutil.beep))
+    .pipe(refresh(livereloadServer));
 });
 
 gulp.task('clientJs', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
-    .on('error', gutil.beep)
-    .pipe(refresh(livereloadServer));
+    .pipe(jshint.reporter('fail').on('error', gutil.beep));
 });
 
 function checkAppReady() {
@@ -123,8 +120,6 @@ gulp.task('launchProject', ['startNode'], function () {
   openURL('http://' + HTTP_HOST + ':' + HTTP_PORT);
 });
 
-
-
 gulp.task('watch', ['launchProject'], function () {
   gulp.watch('app/styles/**/*.scss', ['sass']);
   gulp.watch('app/views/**/*.html', function (event) {
@@ -135,12 +130,14 @@ gulp.task('watch', ['launchProject'], function () {
     gulp.src(event.path)
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail').on('error', gutil.beep))
       .pipe(refresh(livereloadServer));
   });
   gulp.watch('server/**/*.js', function (event) {
     gulp.src(event.path)
       .pipe(jshint('.jshintrcnode'))
-      .pipe(jshint.reporter('jshint-stylish'));
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail').on('error', gutil.beep));
   });
   gulp.watch('Gulpfile.js', function () {
     gutil.beep();

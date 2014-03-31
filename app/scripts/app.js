@@ -4,7 +4,8 @@ angular.module('akurraApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'racer.js'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

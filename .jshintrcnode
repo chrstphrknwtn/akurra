@@ -26,7 +26,8 @@
   "white": true,
   "noempty": false,
   "globals": {
-
+    "angular": false,
+    "window": false
   }
 }
 

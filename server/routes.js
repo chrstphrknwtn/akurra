@@ -6,7 +6,7 @@ var keys = require('./controllers/keys');
 /**
  * Application routes
  */
-module.exports = function(app) {
+module.exports = function (app) {
   app.get('/keys.json', keys.soundcloud);
   app.get('/partials/*', index.partials);
 
