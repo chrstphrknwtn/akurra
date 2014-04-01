@@ -6,5 +6,5 @@ angular.module('akurraApp')
     Playlist.createOrJoin('entries')
       .then(function () {
         // do things
-      });
+    });
   });
