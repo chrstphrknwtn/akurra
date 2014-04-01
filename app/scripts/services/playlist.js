@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Playlist', function (SoundCloud, Player) {
+  .factory('Playlist', function (SoundCloud, Player, Racer, $rootScope) {
 
     var that;
     // ------------------------------------------------------------------------
@@ -11,30 +11,41 @@ angular.module('akurraApp')
       that = this;
       this.id = '';
       this.tracks = [];
-      this.currentTrack = {
-        duration: 259655
-      };
     };
     // ------------------------------------------------------------------------
     // Public API
     // ------------------------------------------------------------------------
     Playlist.prototype.createOrJoin = function (id) {
-      this.id = id;
+      return Racer.init(id)
+        .then(function () {
+          that.tracks = Racer.model.get('entries.tracks');
+          if (!Player.isPlaying) {
+            Player.playTrack(that.tracks[0]);
+          }
+        });
     };
     Playlist.prototype.addTrack = function (newTrack) {
-      if (isDuplicate(newTrack)) {
+      if (!Racer.isReady || isDuplicate(newTrack)) {
         return false;
       }
-      this.tracks.push(newTrack);
+
+      Racer.model.push('entries.tracks', newTrack);
+
       if (!Player.isPlaying) {
         Player.playTrack(newTrack);
       }
       return true;
     };
     Playlist.prototype.removeTrack = function (track) {
+      if (!Racer.isReady) {
+        return false;
+      }
       var index = this.tracks.indexOf(track);
       if (index !== -1) {
-        this.tracks.splice(index, 1);
+        var removed = Racer.model.shift('entries.tracks');
+        if (removed !== track) {
+          Racer.model.insert('entries.tracks', 0, track);
+        }
       }
     };
     // ------------------------------------------------------------------------
@@ -48,9 +59,10 @@ angular.module('akurraApp')
     });
 
     function isDuplicate(newTrack) {
-      return _.find(that.tracks, function (track) {
-        return track.id === newTrack.id;
-      });
+      return false;
+      // return _.find(that.tracks, function (track) {
+      //   return track.id === newTrack.id;
+      // });
     }
     return new Playlist();
   });

@@ -3,78 +3,29 @@
 angular.module('racer.js', [])
   .factory('Racer', function ($http, $q, $rootScope) {
 
-    function extendObject(from, to) {
-      if (from === to) {
-        return to;
-      }
-      if (from.constructor === Array && to && to.constructor === Array) {
-        for (var i = 0; i < from.length; ++i) {
-          to[i] = extendObject(from[i], to[i]);
-        }
-        to.splice(from.length, to.length);
+    var racerjs = require('racer');
+    var that;
 
-        return to;
-      }
-      else if (from instanceof Object && to && to instanceof Object) {
-
-        var key;
-
-        for (key in to) {
-          if (typeof from[key] === 'undefined' || key === '$$hashKey') {
-            delete to[key];
-          }
-        }
-
-        for (key in from) {
-          if (key === '$$hashKey') {
-            continue;
-          }
-
-          to[key] = extendObject(from[key], to[key]);
-        }
-        return to;
-      }
-      else if (to === undefined) {
-        return extendObject(from, new from.constructor());
-      }
-      else {
-        return from;
-      }
+    function Racer() {
+      that = this;
+      this.model = null;
+      this.isReady = null;
     }
 
-    var setImmediate = window && window.setImmediate ? window.setImmediate : function (fn) {
-      setTimeout(fn, 0);
+    Racer.prototype.init = function (playlistId) {
+      var deferred = $q.defer();
+
+      $http.get('/model')
+        .success(function (data) {
+          racerjs.ready(function (model) {
+            that.model = model;
+            that.isReady = true;
+            deferred.resolve(model);
+          });
+          racerjs.init(data);
+        });
+      return deferred.promise;
     };
 
-    var racer = require('racer');
-
-    $http.get('/model').success(function (data) {
-      racer.init(data);
-    });
-
-    var def = $q.defer();
-    racer.ready(function (model) {
-      var paths = {};
-
-      var oldGet = model.get;
-      model.get = function (path) {
-        if (!paths[path]) {
-          paths[path] = extendObject(oldGet.call(model, path));
-
-          model.on('all', path ? path + '**' : '**', function () {
-            // clone data since angular would set $ properties in the racer object otherwise
-            var newData = extendObject(oldGet.call(model, path));
-            paths[path] = extendObject(newData, paths[path]);
-            setImmediate($rootScope.$apply.bind($rootScope));
-          });
-        }
-
-        return paths[path];
-      };
-
-      def.resolve(model);
-      $rootScope.$apply();
-    });
-
-    return def.promise;
+    return new Racer();
   });

@@ -1,4 +1,4 @@
-<div class="track" ng-repeat="track in playlist.tracks">
+<div class="track" ng-repeat="track in playlist.tracks track by $index">
   <img class="artwork" ng-src="{{ track.artwork_url || track.user.avatar_url | scArtwork:47 }}" alt="">
 
   <!-- <section class="track-details">
