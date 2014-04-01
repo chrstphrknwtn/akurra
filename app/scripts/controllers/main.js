@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('MainCtrl', function ($scope, $location, Playlist, racer) {
+  .controller('MainCtrl', function ($scope, $location, Playlist, Racer) {
 
 
-    racer.then(function (stuffs) {
-      console.log(stuffs);
+    Racer.then(function (stuffs) {
       $scope.entries = stuffs.get('entries');
 
       $scope.add = function () {

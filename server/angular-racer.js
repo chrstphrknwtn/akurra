@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('racer.js', [])
-  .factory(function ($http, $q, $rootScope) {
+  .factory('Racer', function ($http, $q, $rootScope) {
+
     function extendObject(from, to) {
       if (from === to) {
         return to;
