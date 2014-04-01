@@ -3,35 +3,35 @@
 angular.module('racer.js', [])
   .factory(function ($http, $q, $rootScope) {
     function extendObject(from, to) {
-    if (from === to) {
-      return to;
-    }
-    if (from.constructor === Array && to && to.constructor === Array) {
-      for (var i = 0; i < from.length; ++i) {
-        to[i] = extendObject(from[i], to[i]);
+      if (from === to) {
+        return to;
       }
-      to.splice(from.length, to.length);
-
-      return to;
-    }
-    else if (from instanceof Object && to && to instanceof Object) {
-
-      var key;
-
-      for (key in to) {
-        if (typeof from[key] === 'undefined' || key === '$$hashKey') {
-          delete to[key];
+      if (from.constructor === Array && to && to.constructor === Array) {
+        for (var i = 0; i < from.length; ++i) {
+          to[i] = extendObject(from[i], to[i]);
         }
-      }
+        to.splice(from.length, to.length);
 
-      for (key in from) {
-        if (key === '$$hashKey') {
-          continue;
+        return to;
+      }
+      else if (from instanceof Object && to && to instanceof Object) {
+
+        var key;
+
+        for (key in to) {
+          if (typeof from[key] === 'undefined' || key === '$$hashKey') {
+            delete to[key];
+          }
         }
 
-        to[key] = extendObject(from[key], to[key]);
-      }
-      return to;
+        for (key in from) {
+          if (key === '$$hashKey') {
+            continue;
+          }
+
+          to[key] = extendObject(from[key], to[key]);
+        }
+        return to;
       }
       else if (to === undefined) {
         return extendObject(from, new from.constructor());
