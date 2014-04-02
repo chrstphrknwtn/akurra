@@ -57,8 +57,8 @@ angular.module('akurraApp')
     Player.prototype.playPreview = function (track) {
 
     };
-    Player.prototype.mute = function () {
-      that.isMuted = true;
+    Player.prototype.toggleMute = function () {
+      this.isMuted = !this.isMuted;
       soundManager.toggleMute(this.currentTrack.id);
     };
     return new Player();

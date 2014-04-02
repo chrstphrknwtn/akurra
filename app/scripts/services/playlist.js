@@ -19,9 +19,11 @@ angular.module('akurraApp')
       return Racer.init(id)
         .then(function () {
           that.tracks = Racer.model.get('entries.tracks');
-          if (!Player.isPlaying) {
-            Player.playTrack(that.tracks[0]);
-          }
+          tryPlayTrack();
+          Racer.model.on('all', function () {
+            console.log('all');
+            tryPlayTrack();
+          });
         });
     };
     Playlist.prototype.addTrack = function (newTrack) {
@@ -53,10 +55,13 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     Player.on('finishedPlayback', function (track) {
       that.removeTrack(track);
-      if (that.tracks.length) {
+    });
+
+    function tryPlayTrack() {
+      if (!Player.isPlaying && that.tracks.length) {
         Player.playTrack(that.tracks[0]);
       }
-    });
+    }
 
     function isDuplicate(newTrack) {
       return false;
