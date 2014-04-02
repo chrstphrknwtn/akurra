@@ -33,7 +33,6 @@ angular.module('akurraApp')
         onplay: function () {
           that.isPlaying = true;
           that.currentTrack = track;
-          that.isMuted = false;
         },
         onfinish: function () {
           that.isPlaying = false;
@@ -58,14 +57,14 @@ angular.module('akurraApp')
 
     function toggleMute() {
       globalVolumeTarget = that.isMuted ? 0 : 100;
-      volumeTransformInterval = $interval(transformVolume, 20, 0, true);
+      volumeTransformInterval = $interval(transformVolume, 40, 0, true);
     }
 
     function transformVolume() {
       if (globalVolume < globalVolumeTarget) {
         globalVolume += 1;
       } else {
-        globalVolume -= 3;
+        globalVolume -= 5;
       }
       // clip volume at 0 and 100
       globalVolume = globalVolume < 0 ? 0 : globalVolume;
