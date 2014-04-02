@@ -1,6 +1,6 @@
 <!-- Search Bar -->
 <input type="text"
        placeholder="Search Soundcloud"
-       ng-model="query.value"
-       ng-enter="searchNow()"
+       ng-model="search.query"
+       ng-enter="soundCloud.search(search.query)"
        ng-class="{searching: soundCloud.isSearching}">

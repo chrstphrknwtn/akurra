@@ -21,7 +21,6 @@ angular.module('akurraApp')
           that.tracks = Racer.model.get('entries.tracks');
           tryPlayTrack();
           Racer.model.on('all', function () {
-            console.log('all');
             tryPlayTrack();
           });
         });
@@ -55,6 +54,8 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     Player.on('finishedPlayback', function (track) {
       that.removeTrack(track);
+      $rootScope.$apply();
+      tryPlayTrack();
     });
 
     function tryPlayTrack() {
