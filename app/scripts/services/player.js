@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Player', function (Keys, $timeout, $rootScope) {
+  .factory('Player', function (Keys, $interval, $rootScope) {
 
     var that;
     // ------------------------------------------------------------------------
@@ -29,19 +29,7 @@ angular.module('akurraApp')
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
-        autoLoad: true,
-        autoPlay: true,
-        // volume: 0,
-        volume: 100,
-        whileloading: function () {
-          that.loadingProgress = this.bytesLoaded / this.bytesTotal;
-          $rootScope.$apply();
-        },
-        whileplaying: function () {
-          that.progress = this.position / this.duration;
-          that.position = this.position;
-          $rootScope.$apply();
-        },
+        volume: globalVolume,
         onplay: function () {
           that.isPlaying = true;
           that.currentTrack = track;
@@ -59,8 +47,50 @@ angular.module('akurraApp')
     };
     Player.prototype.toggleMute = function () {
       this.isMuted = !this.isMuted;
-      soundManager.toggleMute(this.currentTrack.id);
+      toggleMute();
     };
+    // ------------------------------------------------------------------------
+    // Private helpers
+    // ------------------------------------------------------------------------
+    var globalVolume = 100;
+    var globalVolumeTarget = 100;
+    var volumeTransformInterval;
+
+    function toggleMute() {
+      globalVolumeTarget = that.isMuted ? 0 : 100;
+      volumeTransformInterval = $interval(transformVolume, 20, 0, true);
+    }
+
+    function transformVolume() {
+      if (globalVolume < globalVolumeTarget) {
+        globalVolume += 1;
+      } else {
+        globalVolume -= 3;
+      }
+      // clip volume at 0 and 100
+      globalVolume = globalVolume < 0 ? 0 : globalVolume;
+      globalVolume = globalVolume > 100 ? 100 : globalVolume;
+
+      if (globalVolume === 0 || globalVolume === 100) {
+        $interval.cancel(volumeTransformInterval);
+      }
+      soundManager.setVolume(that.currentTrack.id, globalVolume);
+    }
+
+    soundManager.defaultOptions = {
+      autoLoad: true,
+      autoPlay: true,
+      whileloading: function () {
+        that.loadingProgress = this.bytesLoaded / this.bytesTotal;
+        $rootScope.$apply();
+      },
+      whileplaying: function () {
+        that.progress = this.position / this.duration;
+        that.position = this.position;
+        $rootScope.$apply();
+      }
+    };
+
     return new Player();
   });
 
