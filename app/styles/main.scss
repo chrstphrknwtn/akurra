@@ -2,7 +2,7 @@
 // Numbers
 // ----------------------------------------------------------------------------
 $playerWidth: 370px;
-$progressBarHeight: 3px;
+$progressBarHeight: 4px;
 // ----------------------------------------------------------------------------
 // Colors
 // ----------------------------------------------------------------------------
@@ -65,6 +65,7 @@ body {
   background: whitesmoke;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
+  font-size: 14px;
   color: $nearlyBlack;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -93,6 +94,7 @@ h3 {
 
 header {
   position: fixed;
+  z-index: 2000;
   width: 100%;
   padding-top: 5px;
   overflow: hidden;
@@ -100,14 +102,15 @@ header {
 }
 #playlist {
   position: relative;
+  z-index: 1000;
   white-space: nowrap;
 
   .track {
     display: inline-block;
     vertical-align: top;
     margin-left: 5px;
-    width: 47px;
-    height: 47px;
+    width: 74px;
+    height: 74px;
     img {
       width: 100%;
       height: 100%;
@@ -115,18 +118,18 @@ header {
   }
   .track:first-child {
     margin-left: 5px;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
   }
 }
 .current-track-details {
   position: absolute;
-  top: 65px;
-  left: 110px;
+  top: 97px;
+  left: 160px;
 }
 
 header + * {
-  padding-top: 145px;
+  padding-top: 188px;
 }
 
 #search-bar {
@@ -167,26 +170,66 @@ header + * {
 
 #search-results {
   position: relative;
+  z-index: 500;
   list-style: none;
   padding: 0;
   margin: 30px auto 0 auto;
 
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
   li {
     display: block;
     float: left;
+    flex: 1 0 280px;
   }
 }
 search-result {
-  a {
-    display: block;
-    position: relative;
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-  }
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   img {
-    position: absolute;
+    position: relative;
     width: 100%;
+    float: left;
+  }
+  .track-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10%;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+
+    color: white;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    opacity: 0;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .add-to-playlist {
+    display: inline-block;
+    padding: 3px 12px 4px 12px;
+    margin: 20px 0 0 0;
+    border: 1px solid white;
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    color: white;
+  }
+
+  &:hover {
+    .track-details {
+      opacity: 1;
+    }
   }
 }
 
