@@ -177,6 +177,13 @@ header + * {
   }
 }
 search-result {
+  a {
+    display: block;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+  }
   img {
     position: absolute;
     width: 100%;
