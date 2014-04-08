@@ -1,8 +1,8 @@
 <header>
   <div id="playlist">
     <div class="track" ng-repeat="track in playlist.tracks track by $index">
-      <img ng-if="$first" ng-src="{{track | scArtwork:100}}" alt="">
-      <img ng-if="!$first" ng-src="{{track | scArtwork:47}}" alt="">
+      <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
+      <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
     </div>
     <div class="current-track-details">
       <h3>{{player.currentTrack.title}}</h3>
