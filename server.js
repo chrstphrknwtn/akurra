@@ -19,7 +19,7 @@ require('./server/config/express')(app, store);
 
 
 app.get('/model', function (req, res) {
-  var model = store.createModel();
+  var model = req.getModel();
   model.subscribe('entries', function (err, entries) {
     if (err) {
       res.status(500);
