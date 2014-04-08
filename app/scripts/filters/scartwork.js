@@ -40,6 +40,9 @@ angular.module('akurraApp')
         case 300:
           artwork = artworkUrl.replace('large.jpg', 't300x300.jpg');
           break;
+        case 100:
+          artwork = artworkUrl;
+          break;
         case 47:
           artwork = artworkUrl.replace('large.jpg', 'badge.jpg');
           break;
@@ -50,11 +53,3 @@ angular.module('akurraApp')
       return artwork;
     };
   });
-
-  // A26797
-  // E45A73
-  // F6A957
-  // CCEAD0
-  // A2C279
-  // FE92A9
-  // DB4670
