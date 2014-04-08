@@ -31,10 +31,8 @@ angular.module('akurraApp')
       }
 
       Racer.model.push('entries.tracks', newTrack);
-
-      if (!Player.isPlaying) {
-        Player.playTrack(newTrack);
-      }
+      $rootScope.$apply();
+      tryPlayTrack(newTrack);
       return true;
     };
     Playlist.prototype.removeTrack = function (track) {
