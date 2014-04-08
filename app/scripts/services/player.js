@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Player', function (Keys, $interval, $rootScope) {
+  .factory('Player', function (Keys, $interval, $rootScope, $log) {
 
     var that;
     // ------------------------------------------------------------------------
@@ -26,6 +26,7 @@ angular.module('akurraApp')
       });
     };
     Player.prototype.playTrack = function (track) {
+      $log.log(track);
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line

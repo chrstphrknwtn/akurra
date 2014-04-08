@@ -1,15 +1,27 @@
-// VARIABLES
+// ----------------------------------------------------------------------------
+// Numbers
+// ----------------------------------------------------------------------------
 $playerWidth: 370px;
+$progressBarHeight: 3px;
+// ----------------------------------------------------------------------------
+// Colors
+// ----------------------------------------------------------------------------
+$darkPurple: #4B3870;
+$lightPurple: #A26797;
+$pink: #E45A73;
+$banana: #F6A957;
+$green: #99B898;
 
-$pink: #E84A5F;
-$purple: #FF847C;
+// ----------------------------------------------------------------------------
+// Colors - Greys
+// ----------------------------------------------------------------------------
+$nearlyBlack: #1A0A0D;
 $greyLighter: #e1e1e1;
 $greyLight: #d1d1d1;
-$nearlyBlack: #2A363B;
-$green: #99B898;
-$skin: #FECEA8;
 
-// MIXINS
+// ----------------------------------------------------------------------------
+// Mixins
+// ----------------------------------------------------------------------------
 @mixin clearfix() {
   &:before,
   &:after {
@@ -20,7 +32,6 @@ $skin: #FECEA8;
     clear: both;
   }
 }
-
 @mixin placeholder($color: gray, $weight: normal) {
   &:-moz-placeholder            { color: $color; font-weight: $weight; } // Firefox 4-18
   &::-moz-placeholder           { color: $color; font-weight: $weight; } // Firefox 19+
@@ -28,7 +39,9 @@ $skin: #FECEA8;
   &::-webkit-input-placeholder  { color: $color; font-weight: $weight; } // Safari and Chrome
 }
 
-// ANIMATIONS
+// ----------------------------------------------------------------------------
+// Animations
+// ----------------------------------------------------------------------------
 @keyframes search-pulse {
  0%   {border-color:$pink;}
  50%  {border-color:$green;}
@@ -40,12 +53,19 @@ $skin: #FECEA8;
  100% {border-color:$pink;}
 }
 
-// STYLES
+// ----------------------------------------------------------------------------
+// Styles
+// ----------------------------------------------------------------------------
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
 body {
   background: whitesmoke;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
-  color: #333333;
+  color: $nearlyBlack;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -53,177 +73,171 @@ body {
 * { box-sizing: border-box }
 
 a {
-  color: $purple;
+  color: $lightPurple;
 }
 
-#playlist {
+h3 { font-size: 16px }
+h4 { font-size: 13px }
+
+h4,
+h3 {
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: fixed;
   width: 100%;
-  height: 51px;
+  padding-top: 5px;
   overflow: hidden;
-  background-color: $nearlyBlack;
+  background: $nearlyBlack;
+}
+#playlist {
+  position: relative;
+  white-space: nowrap;
 
   .track {
-    display: inline;
-  }
-  img {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
     width: 47px;
+    height: 47px;
+    .img {
+      width: 100%;
+      height: 100%;
+      background: $darkPurple;
+    }
   }
+  .track:first-child {
+    margin-left: 5px;
+    width: 100px;
+    height: 100px;
+  }
+}
+.current-track-details {
+  position: absolute;
+  top: 65px;
+  left: 110px;
+}
+
+header + * {
+  padding-top: 130px;
 }
 
 #search-bar {
-  width: $playerWidth;
-  margin: 20px auto 0 auto;
-
+  width: 350px;
+  margin: 0 auto;
   input {
     width: 100%;
-    padding: 6px;
-    margin: 10px 0 30px 0;
+    padding: 6px 0;
+    border: 1px solid $greyLighter;
+    border-radius: 20px;
     font-size: 15px;
     text-align: center;
     @include placeholder($pink, 100);
-    border: 1px solid $greyLighter;
-    border-radius: 20px;
-    transition: border 0.4s ease;
-
     &:hover {
       outline: 0 none;
-      border: 1px solid $purple;
+      border: 1px solid $lightPurple;
     }
     &:focus {
       outline: 0 none;
       border: 1px solid $pink;
       @include placeholder(transparent, 100);
     }
-    &.searching {
-      animation:search-pulse 1s infinite;
-    }
+  }
+}
+.progress-bar {
+  margin-top: 5px;
+  width: 100%;
+  height: $progressBarHeight;
+  transition: width 0.25s linear;
+  &.loaded {
+    background: grey;
+  }
+  &.played {
+    background: linear-gradient(to right, $banana, $pink);
+    margin-top: -$progressBarHeight;
+  }
+}
+
+search-result {
+  img {
+    width: 300px;
+    height: 300px;
   }
 }
 
 
-#search-results {
+// #search-results {
+//   ul {
+//     position: relative;
+//     list-style: none;
+//     padding: 0;
+//     margin: 0 auto;
+//     li {
+//       display: block;
+//       float: left;
 
-  ul {
-    position: relative;
-    list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    li {
-      display: block;
-      float: left;
+//       a {
+//         display: block;
+//         position: relative;
+//         width: 300px;
+//         height: 300px;
+//         overflow: hidden;
+//       }
 
-      a {
-        display: block;
-        position: relative;
-        width: 300px;
-        height: 300px;
-        overflow: hidden;
-      }
+//       img {
+//         position: absolute;
+//         width: 100%;
+//       }
 
-      img {
-        position: absolute;
-        width: 100%;
-      }
+//       .type-wrapper {
+//         position: absolute;
+//         display: table;
+//         width: 100%;
+//         height: 100%;
+//       }
 
-      .type-wrapper {
-        position: absolute;
-        display: table;
-        width: 100%;
-        height: 100%;
-      }
+//       .result-details {
+//         display: table-cell;
+//         vertical-align: middle;
+//         margin: 0 auto;
+//         text-align: center;
+//         color: transparent;
+//         transition: all 0.15s ease;
 
-      .result-details {
-        display: table-cell;
-        vertical-align: middle;
-        margin: 0 auto;
-        text-align: center;
-        color: transparent;
-        transition: all 0.15s ease;
+//         &:hover {
+//           background: $purple;
+//           color: white;
+//         }
 
-        &:hover {
-          background: $purple;
-          color: white;
-        }
-
-        .title {
-          padding: 0 10px;
-          display: block;
-          text-align: center;
-          font-size: 12px;
-          font-weight: bold;
-          margin-bottom: 4px;
-        }
-        .artist {
-          display: block;
-          margin-bottom: 10px;
-          text-align: center;
-          font-size: 12px;
-          font-weight: 300;
-        }
-        .duration {
-          display: block;
-          font-size: 12px;
-          font-weight: 900px;
-        }
-      }
-    }
-  }
-}
-#playback-controls {
-  button {
-    position: absolute;
-    top: 80px;
-    width: 30px;
-    height: 30px;
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
-.track-progress {
-  position: relative;
-  margin: 0 0 4px 0;
-
-  .progress-bar {
-    position: relative;
-    width: 0%;
-    height: 2px;
-    border-radius: 5px;
-
-    &.loaded {
-      background: rgba(0,0,0,0.2);
-      transition: width 0.5s ease;
-    }
-    &.played {
-      margin-top: -2px;
-      background: $purple; /* Old browsers */
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,$purple), color-stop(100%,$pink)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(left,  $purple 0%, $pink 100%); /* Chrome10+,Safari5.1+ */
-      background:    -moz-linear-gradient(left,  $purple 0%, $pink 100%); /* FF3.6+ */
-      background:     -ms-linear-gradient(left,  $purple 0%, $pink 100%); /* IE10+ */
-      background:      -o-linear-gradient(left,  $purple 0%, $pink 100%); /* Opera 11.10+ */
-      background:         linear-gradient(to right,  $purple 0%,$pink 100%); /* W3C */
-      transition: width 0.25s linear;
-
-      &.test {
-        transition: none;
-        margin-top: 0;
-        background: red;
-      }
-    }
-  }
-}
-
-.track-times {
-  font-size: 10px;
-  color: #888;
-
-  .elapsed {
-    float: left;
-  }
-  .duration {
-    float: right;
-  }
-}
+//         .title {
+//           padding: 0 10px;
+//           display: block;
+//           text-align: center;
+//           font-size: 12px;
+//           font-weight: bold;
+//           margin-bottom: 4px;
+//         }
+//         .artist {
+//           display: block;
+//           margin-bottom: 10px;
+//           text-align: center;
+//           font-size: 12px;
+//           font-weight: 300;
+//         }
+//         .duration {
+//           display: block;
+//           font-size: 12px;
+//           font-weight: 900px;
+//         }
+//       }
+//     }
+//   }
+// }
