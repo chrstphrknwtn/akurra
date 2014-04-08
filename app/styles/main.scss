@@ -126,7 +126,7 @@ header {
 }
 
 header + * {
-  padding-top: 130px;
+  padding-top: 145px;
 }
 
 #search-bar {
@@ -165,23 +165,23 @@ header + * {
   }
 }
 
-search-result {
-  img {
-    width: 300px;
-    height: 300px;
+#search-results {
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 30px auto 0 auto;
+
+  li {
+    display: block;
+    float: left;
   }
 }
-
-
-// #search-results {
-//   ul {
-//     position: relative;
-//     list-style: none;
-//     padding: 0;
-//     margin: 0 auto;
-//     li {
-//       display: block;
-//       float: left;
+search-result {
+  img {
+    position: absolute;
+    width: 100%;
+  }
+}
 
 //       a {
 //         display: block;
