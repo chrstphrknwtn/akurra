@@ -21,11 +21,13 @@ require('./server/config/express')(app, store);
 app.get('/model', function (req, res) {
   var model = req.getModel();
   model.subscribe('entries', function (err, entries) {
+    console.log('----- subscribe -------', entries);
     if (err) {
       res.status(500);
       res.send(err);
     } else {
       model.bundle(function (err, bundle) {
+        console.log('------ bundle -----', err);
         res.send(JSON.stringify(bundle));
       });
     }
