@@ -59,7 +59,7 @@ angular.module('akurraApp')
     });
 
     function tryPlayTrack() {
-      if (!Player.isPlaying && that.tracks.length) {
+      if (!Player.isPlaying && that.tracks && that.tracks.length) {
         Player.playTrack(that.tracks[0]);
       }
     }
