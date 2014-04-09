@@ -3,6 +3,7 @@
 angular.module('akurraApp')
   .factory('SoundCloud', function ($rootScope, $log) {
 
+    var colorCounter = 0;
     var that;
     // ------------------------------------------------------------------------
     // Constructor
@@ -64,7 +65,8 @@ angular.module('akurraApp')
         // mint
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM48+rCfwAIkgOGrtHIjAAAAABJRU5ErkJggg=='
       ];
-      return colors[Math.floor(Math.random() * colors.length)];
+
+      return colors[colorCounter++ % colors.length];
     }
     return new SoundCloud();
   });
