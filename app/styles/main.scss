@@ -53,6 +53,18 @@ $greyLight: #d1d1d1;
  100% {border-color:$pink;}
 }
 
+.fade-in.ng-hide-remove,
+.fade-in-out.ng-hide-add,
+.fade-in-out.ng-hide-remove {
+  transition: opacity 0.5s linear;
+  display: block!important;
+  opacity: 1;
+}
+.fade-in.ng-hide,
+.fade-in-out.ng-hide {
+  opacity: 0;
+}
+
 // ----------------------------------------------------------------------------
 // Styles
 // ----------------------------------------------------------------------------
