@@ -191,6 +191,7 @@ header + * {
     border-radius: 20px;
     font-size: 15px;
     text-align: center;
+    transition: border 0.2s linear;
     @include placeholder($pink, 100);
     &:hover {
       outline: 0 none;

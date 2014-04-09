@@ -26,7 +26,6 @@ module.exports = function (app, angularRacer) {
     res.type('js');
     res.send(angularRacer);
   });
-
   app.get('/keys.json', keys.soundcloud);
   app.get('/partials/*', index.partials);
 

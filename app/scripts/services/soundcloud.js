@@ -22,7 +22,6 @@ angular.module('akurraApp')
     SoundCloud.prototype.search = function (query) {
       if (!!query) {
         this.isSearching = true;
-        $log.log('Running SoundCloud search for', query);
         SC.get('/tracks', { q: query, limit: 200 }, onSearchComplete);
       }
     };

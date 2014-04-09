@@ -4,7 +4,7 @@ angular.module('akurraApp')
   .directive('volumeButton', function ($timeout, Player) {
     var svgIconConfig = {
       volume : {
-        url : 'views/partials/volume.svg',
+        url : '/images/volume.svg',
         animation : [
           {
             el : 'path:nth-child(1)',

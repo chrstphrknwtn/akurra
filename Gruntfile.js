@@ -198,7 +198,7 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/public/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/public/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            // '<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
             '<%= yeoman.dist %>/public/styles/fonts/*'
           ]
         }
@@ -238,16 +238,16 @@ module.exports = function (grunt) {
       }
     },
 
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/public/images'
-        }]
-      }
-    },
+    // svgmin: {
+    //   dist: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>/images',
+    //       src: '{,*/}*.svg',
+    //       dest: '<%= yeoman.dist %>/public/images'
+    //     }]
+    //   }
+    // },
 
     htmlmin: {
       dist: {
@@ -260,7 +260,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/views',
-          src: ['*.html', 'partials/**/*.html'],
+          src: ['*.html', 'partials/**/*.*'],
           dest: '<%= yeoman.dist %>/views'
         }]
       }
@@ -298,8 +298,9 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'images/{,*/}*.{webp}',
-            'fonts/**/*'
+            'images/{,*/}*.{webp,png,jpg,jpeg,gif,svg}',
+            'fonts/**/*',
+            'scripts/vendor/*.js'
           ]
         }, {
           expand: true,
@@ -341,7 +342,7 @@ module.exports = function (grunt) {
       dist: [
         'compass:dist',
         'imagemin',
-        'svgmin',
+        // 'svgmin',
         'htmlmin'
       ]
     },
