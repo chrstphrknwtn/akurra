@@ -104,7 +104,12 @@ header {
   position: relative;
   z-index: 1000;
   white-space: nowrap;
-
+  margin-top: -145px;
+  height: 150px;
+  transition: margin-top 0.2s ease;
+  &.expanded {
+    margin-top: 0;
+  }
   .track {
     display: inline-block;
     vertical-align: top;

@@ -1,5 +1,5 @@
 <header>
-  <div id="playlist">
+  <div id="playlist" ng-class="{expanded: playlist.tracks.length}">
     <div class="track" ng-repeat="track in playlist.tracks track by $index">
       <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
       <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="progress-bar loaded" style="width:{{ player.loadingProgress | normalizedToPercentage }}"></div>
-  <div class="progress-bar played" style="width:{{ player.progress | normalizedToPercentage }}"></div>
+  <div class="progress-bar played" style="width:{{ player.progress || 1 | normalizedToPercentage }}"></div>
 </header>
 
 <div id="search-bar">
