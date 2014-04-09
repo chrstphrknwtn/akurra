@@ -33,6 +33,7 @@ angular.module('akurraApp')
         onplay: function () {
           that.isPlaying = true;
           that.currentTrack = track;
+          that.emit('startedPlayback', track);
         },
         onfinish: function () {
           that.isPlaying = false;
@@ -47,6 +48,11 @@ angular.module('akurraApp')
     Player.prototype.toggleMute = function () {
       this.isMuted = !this.isMuted;
       toggleMute();
+      if (this.isMuted) {
+        this.emit('mute');
+      } else {
+        this.emit('unmute');
+      }
     };
     // ------------------------------------------------------------------------
     // Private helpers

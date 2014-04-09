@@ -33,7 +33,9 @@
     "Modernizr": false,
     "SC": false,
     "soundManager": false,
-    "EventEmitter": false
+    "EventEmitter": false,
+    "svgIcon": false,
+    "mina": false
   }
 }
 

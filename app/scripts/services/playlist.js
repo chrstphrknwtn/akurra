@@ -45,6 +45,7 @@ angular.module('akurraApp')
           Racer.model.insert('entries.tracks', 0, track);
         }
       }
+      $rootScope.$apply();
     };
     // ------------------------------------------------------------------------
     // Private helpers

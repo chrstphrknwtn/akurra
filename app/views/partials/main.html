@@ -4,6 +4,7 @@
       <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
       <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
     </div>
+    <volume-button></volume-button>
     <div class="current-track-details">
       <h3>{{player.currentTrack.title}}</h3>
       <h4>{{player.currentTrack.user.username}}</h4>
