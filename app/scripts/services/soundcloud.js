@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('SoundCloud', function ($rootScope, $log) {
+  .factory('SoundCloud', function ($rootScope, $log, $timeout) {
 
     var colorCounter = 0;
     var that;

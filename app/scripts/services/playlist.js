@@ -29,9 +29,8 @@ angular.module('akurraApp')
       if (!Racer.isReady || isDuplicate(newTrack)) {
         return false;
       }
-
       Racer.model.push('entries.tracks', newTrack);
-      $rootScope.$apply();
+
       tryPlayTrack(newTrack);
       return true;
     };
@@ -52,7 +51,6 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     Player.on('finishedPlayback', function (track) {
       that.removeTrack(track);
-      $rootScope.$apply();
       tryPlayTrack();
     });
 

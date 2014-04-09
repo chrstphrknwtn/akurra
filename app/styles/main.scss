@@ -133,6 +133,7 @@ header + * {
 }
 
 #search-bar {
+  position: relative;
   width: 350px;
   margin: 0 auto;
   input {
@@ -153,6 +154,15 @@ header + * {
       @include placeholder(transparent, 100);
     }
   }
+}
+.loading-spinner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 192px;
+  right: 5px;
+  background-image: url('/images/loading.gif');
+  background-size: 100%;
 }
 .progress-bar {
   margin-top: 5px;
@@ -232,61 +242,3 @@ search-result {
     }
   }
 }
-
-//       a {
-//         display: block;
-//         position: relative;
-//         width: 300px;
-//         height: 300px;
-//         overflow: hidden;
-//       }
-
-//       img {
-//         position: absolute;
-//         width: 100%;
-//       }
-
-//       .type-wrapper {
-//         position: absolute;
-//         display: table;
-//         width: 100%;
-//         height: 100%;
-//       }
-
-//       .result-details {
-//         display: table-cell;
-//         vertical-align: middle;
-//         margin: 0 auto;
-//         text-align: center;
-//         color: transparent;
-//         transition: all 0.15s ease;
-
-//         &:hover {
-//           background: $purple;
-//           color: white;
-//         }
-
-//         .title {
-//           padding: 0 10px;
-//           display: block;
-//           text-align: center;
-//           font-size: 12px;
-//           font-weight: bold;
-//           margin-bottom: 4px;
-//         }
-//         .artist {
-//           display: block;
-//           margin-bottom: 10px;
-//           text-align: center;
-//           font-size: 12px;
-//           font-weight: 300;
-//         }
-//         .duration {
-//           display: block;
-//           font-size: 12px;
-//           font-weight: 900px;
-//         }
-//       }
-//     }
-//   }
-// }
