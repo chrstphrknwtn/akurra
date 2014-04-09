@@ -83,7 +83,7 @@
 	}
 
 	svgIcon.prototype.options = {
-		speed : 200,
+		speed : 250,
 		easing : mina.linear,
 		evtoggle : 'click', // click || mouseover
 		size : { w : 64, h : 64 },

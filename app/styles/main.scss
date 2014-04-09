@@ -89,6 +89,21 @@ a {
   color: $lightPurple;
 }
 
+h1,
+h2 {
+  font-weight: 300;
+  margin: 0;
+}
+h1 {
+  font-size: 72px;
+  color: #DCDCDC;
+  font-family: Comfortaa;
+}
+h2 {
+  color: #BEBEBE;
+  font-size: 19px;
+  margin-top: -12px;
+}
 h3 { font-size: 16px }
 h4 { font-size: 13px }
 
@@ -103,7 +118,18 @@ h3 {
   margin: 0;
   padding: 0;
 }
-
+.headline-wrapper {
+  position: relative;
+  width: 250px;
+  margin: 0 auto;
+}
+.headline {
+  position: absolute;
+  top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  font-weight:300;
+}
 header {
   position: fixed;
   z-index: 2000;
@@ -241,6 +267,7 @@ search-result {
     text-align: center;
     background-color: rgba(0,0,0,0.6);
     opacity: 0;
+    transition: opacity 0.07s linear;
   }
   .title {
     font-weight: bold;

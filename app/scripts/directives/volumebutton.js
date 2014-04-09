@@ -38,7 +38,9 @@ angular.module('akurraApp')
         var icon = new svgIcon(element[0], svgIconConfig ); // jshint ignore:line
 
         Player.once('startedPlayback', function () {
-          icon.toggle(true);
+          $timeout(function () {
+            icon.toggle(true);
+          }, 300);
         });
 
         element.on('click', function () {
