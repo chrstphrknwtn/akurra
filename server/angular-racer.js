@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('racer.js', [])
-  .factory('Racer', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+  .factory('Racer', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 
     var racerjs = require('racer');
     var that;

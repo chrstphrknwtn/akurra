@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('SoundCloud', function ($rootScope) {
-   
+  .factory('SoundCloud', function ($rootScope, $log) {
+
     var that;
     // ------------------------------------------------------------------------
     // Constructor
@@ -21,8 +21,8 @@ angular.module('akurraApp')
     SoundCloud.prototype.search = function (query) {
       if (!!query) {
         this.isSearching = true;
-        console.log('Running SoundCloud search for', query);
-        SC.get('/tracks', { q: query, limit: 200 }, function (tracks) {
+        $log.log('Running SoundCloud search for', query);
+        SC.get('/tracks', { q: query, limit: 200 }, function (tracks, err) {
           that.isSearching = false;
           var filteredTracks = _.filter(tracks, function (track) {
             return track.streamable;

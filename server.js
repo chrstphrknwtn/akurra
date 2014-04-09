@@ -7,7 +7,6 @@ var express = require('express')
   , http = require('http')
   , racer = require('racer');
 
-
 // DB Setup
 var store = require('./server/config/racer')(racer);
 
@@ -17,33 +16,11 @@ var app = express();
 // Express settings
 require('./server/config/express')(app, store);
 
-
-app.get('/model', function (req, res) {
-  var model = req.getModel();
-  model.subscribe('entries', function (err, entries) {
-    console.log('----- subscribe -------', entries);
-    if (err) {
-      res.status(500);
-      res.send(err);
-    } else {
-      model.bundle(function (err, bundle) {
-        console.log('------ bundle -----', err);
-        res.send(JSON.stringify(bundle));
-      });
-    }
-  });
-});
-
 // bundle client side angular-racer first
-store.bundle(__dirname + '/server/angular-racer.js', function (err, js) {
-  app.get('/angular-racer.js', function (req, res) {
-    res.type('js');
-    res.send(js);
-  });
-  // Routing
-  require('./server/routes')(app);
+store.bundle(__dirname + '/server/angular-racer.js', function (err, angularRacer) {
+  // define routes
+  require('./server/routes')(app, angularRacer);
 });
-
 
 // Start server
 app.listen(config.port, function () {

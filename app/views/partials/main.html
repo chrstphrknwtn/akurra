@@ -17,7 +17,7 @@
   <input type="text" placeholder="Search Soundcloud" ng-model="search.query" ng-enter="soundCloud.search(search.query)" ng-class="{searching: soundCloud.isSearching}">
 </div>
 
-<ul id="search-results"> <!-- Search Results -->
+<ul id="search-results">
   <li ng-repeat="track in soundCloud.searchResults">
     <search-result track="track"></search-result>
   </li>

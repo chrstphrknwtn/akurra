@@ -3,10 +3,7 @@
 angular.module('akurraApp')
   .controller('MainCtrl', function ($scope, $location, Playlist, SoundCloud, Player) {
 
-    Playlist.createOrJoin('entries')
-      .then(function () {
-        // do things
-    });
+    Playlist.createOrJoin('entries');
 
     $scope.search = {
       query: null

@@ -10,8 +10,8 @@ angular.module('akurraApp', [
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'partials/main',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        templateUrl: 'partials/main'
       })
       .otherwise({
         redirectTo: '/'
@@ -19,7 +19,7 @@ angular.module('akurraApp', [
 
     $locationProvider.html5Mode(true);
   })
-  .run(function (Keys, SoundCloud, Player) {
+  .run(function (Keys, SoundCloud, Player, Playlist) {
     Player.init();
 
     Keys.get()
