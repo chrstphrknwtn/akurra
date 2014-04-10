@@ -6,10 +6,10 @@ var keys = require('./controllers/keys');
 /**
  * Application routes
  */
-module.exports = function (app, angularRacer) {
+module.exports = function (app, angularRacer, store) {
 
   app.get('/model', function (req, res) {
-    var model = req.getModel();
+    var model = store.createModel();
     model.subscribe('entries', function (err) {
       if (err) {
         res.status(500);

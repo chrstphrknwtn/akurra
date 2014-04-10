@@ -19,7 +19,7 @@ require('./server/config/express')(app, store);
 // bundle client side angular-racer first
 store.bundle(__dirname + '/server/angular-racer.js', function (err, angularRacer) {
   // define routes
-  require('./server/routes')(app, angularRacer);
+  require('./server/routes')(app, angularRacer, store);
 });
 
 // Start server
