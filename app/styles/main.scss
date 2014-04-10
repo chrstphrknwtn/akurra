@@ -86,7 +86,11 @@ body {
 * { box-sizing: border-box }
 
 a {
-  color: $lightPurple;
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: $pink;
 }
 
 h1,

@@ -14,7 +14,7 @@
     </div>
     <volume-button></volume-button>
     <div class="current-track-details">
-      <h3>{{player.currentTrack.title}}</h3>
+      <h3><a ng-href="{{player.currentTrack.permalink_url}}" target="_blank">{{player.currentTrack.title}}</a></h3>
       <h4>{{player.currentTrack.user.username}}</h4>
     </div>
   </div>
