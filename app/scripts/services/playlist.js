@@ -23,6 +23,11 @@ angular.module('akurraApp')
           Racer.model.on('all', function () {
             tryPlayTrack();
           });
+          Racer.model.on('error', function (err) {
+            console.log('------------ RacerJS Model error --------------');
+            console.log(err);
+            console.log('-----------------------------------------------');
+          });
         });
     };
     Playlist.prototype.addTrack = function (newTrack) {

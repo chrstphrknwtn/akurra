@@ -12,10 +12,18 @@ module.exports = function (app, angularRacer, store) {
     var model = store.createModel();
     model.subscribe('entries', function (err) {
       if (err) {
+        console.log('----------------------------------- Something broke, routes.js -----------------------------------------');
+        console.log('Error subscribing to model ',  err);
+        console.log('----------------------------------------------------------------------------');
         res.status(500);
         res.send(err);
       } else {
         model.bundle(function (err, bundle) {
+          if (err){
+            console.log('----------------------------------- Something broke, routes.js -----------------------------------------');
+            console.log('Error bundling model ',  err);
+            console.log('----------------------------------------------------------------------------');
+          }
           res.send(JSON.stringify(bundle));
         });
       }

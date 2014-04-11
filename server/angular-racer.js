@@ -23,6 +23,9 @@ angular.module('racer.js', [])
             deferred.resolve(model);
           });
           racerjs.init(data);
+        })
+        .error(function (err) {
+          console.log('Racer could not get model', err);
         });
       return deferred.promise;
     };

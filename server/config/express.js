@@ -46,7 +46,9 @@ module.exports = function (app, store) {
     // Router (only error handlers should come after this)
     app.use(app.router);
     app.use(function (err, req, res, next) {
+      console.log('----------------------------------- Something broke, express.js -----------------------------------------');
       console.error(err.stack || (new Error(err)).stack);
+      console.log('----------------------------------------------------------------------------');
       res.send(500, 'Something broke!');
     });
   });
