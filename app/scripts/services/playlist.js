@@ -10,6 +10,7 @@ angular.module('akurraApp')
     var Playlist = function () {
       that = this;
       this.id = '';
+      this.tracksPath = '';
       this.tracks = [];
     };
     // ------------------------------------------------------------------------
@@ -17,9 +18,11 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     Playlist.prototype.createOrJoin = function (id) {
       this.id = id;
+      this.tracksPath = 'playlists.' + id + '.tracks';
       return Racer.init(id)
         .then(function () {
-          that.tracks = Racer.model.get(that.id + '.tracks');
+          that.tracks = Racer.model.get(that.tracksPath);
+          console.log(that.tracks);
           tryPlayTrack();
           Racer.model.on('all', function () {
             tryPlayTrack();
@@ -35,7 +38,7 @@ angular.module('akurraApp')
       if (!Racer.isReady || isDuplicate(newTrack)) {
         return false;
       }
-      Racer.model.push(that.id + '.tracks', newTrack);
+      Racer.model.push(that.tracksPath, newTrack);
 
       tryPlayTrack(newTrack);
       return true;
@@ -46,9 +49,9 @@ angular.module('akurraApp')
       }
       var index = this.tracks.indexOf(track);
       if (index !== -1) {
-        var removed = Racer.model.shift(that.id + '.tracks');
+        var removed = Racer.model.shift(that.tracksPath);
         if (removed !== track) {
-          Racer.model.insert(that.id + '.tracks', 0, track);
+          Racer.model.insert(that.tracksPath, 0, track);
         }
       }
       $rootScope.$apply();

@@ -16,7 +16,7 @@ angular.module('akurraApp', [
         templateUrl: 'partials/main',
         redirectTo: function (params) {
           // redirect home if playlistId contains anything but letters, numbers, underscores or hyphens
-          return /[^a-z0-9-_]/i.test(params.playlistId) ? '/' : params.playlistId;
+          return /^[0-9]|[^0-9a-z-]/i.test(params.playlistId) ? '/' : params.playlistId;
         }
       })
       .otherwise({

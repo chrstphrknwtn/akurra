@@ -18,12 +18,13 @@ module.exports = function (app, angularRacer, store) {
 
   app.get('/playlists/:playlistId', function (req, res) {
 
-    if (/[^a-z0-9-_]/i.test(req.params.playlistId)) {
+    if (/^[0-9]|[^0-9a-z-]/i.test(req.params.playlistId)) {
       return res.redirect('/');
     }
 
     var model = store.createModel();
-    model.subscribe(req.params.playlistId, function (err) {
+    var playlist = model.at('playlists.' + req.params.playlistId);
+    model.subscribe(playlist, function (err) {
       if (err) {
         console.log('----------------------------------- Something broke, routes.js -----------------------------------------');
         console.log('Error subscribing to model ',  err);
@@ -31,6 +32,11 @@ module.exports = function (app, angularRacer, store) {
         res.status(500);
         res.send(err);
       } else {
+        // setup model
+        if (!playlist.get('tracks')) {
+          playlist.set('tracks', [])
+        }
+
         model.bundle(function (err, bundle) {
           if (err) {
             console.log('----------------------------------- Something broke, routes.js -----------------------------------------');
