@@ -7,7 +7,7 @@ var gulp     = require('gulp')
   , jshint   = require('gulp-jshint')
   , refresh  = require('gulp-livereload')
   , prefix   = require('gulp-autoprefixer')
-
+  , shell    = require('gulp-shell')
   , fs       = require('fs')
   , nodemon  = require('nodemon')
   , http     = require('http')
@@ -18,7 +18,7 @@ var gulp     = require('gulp')
 var livereloadServer = tinylr();
 var checkAppReadyInterval;
 var HTTP_HOST = 'localhost';
-var HTTP_PORT = 3000;
+var HTTP_PORT = 9000;
 var LIVERELOAD_PORT = 35729;
 
 process.env.NODE_APP_READY = 'false';
@@ -26,7 +26,7 @@ process.env.NODE_APP_READY = 'false';
 ///////////////////////////////////////////////
 /////////// SERVE / WATCH / RELOAD ////////////
 ///////////////////////////////////////////////
-gulp.task('default', ['gulpfile', 'deleteTemp', 'sass', 'serverJs', 'clientJs', 'startLivereloadServer', 'startNode', 'launchProject', 'watch']);
+gulp.task('default', ['gulpfile', 'deleteTemp', 'sass', 'serverJs', 'clientJs', 'runMongo', 'startLivereloadServer', 'startNode', 'runMongo', 'launchProject', 'watch']);
 
 gulp.task('gulpfile', function () {
   return gulp.src('gulpfile.js')
@@ -41,8 +41,8 @@ gulp.task('deleteTemp', function () {
 });
 
 gulp.task('sass', ['deleteTemp'], function () {
-  return gulp.src('app/styles/main.scss')
-  // return gulp.src('app/styles/**/*.scss')
+  // return gulp.src('app/styles/main.scss')
+  return gulp.src('app/styles/**/*.scss')
     .pipe(sass({loadPath: ['app/bower_components']}).on('error', gutil.beep))
     .pipe(prefix('last 2 versions').on('error', function () {}))
     .pipe(gulp.dest('.tmp/styles'))
@@ -99,7 +99,7 @@ function onNodeServerRestart(files) {
   }
 }
 
-gulp.task('startNode', ['gulpfile', 'deleteTemp', 'sass', 'clientJs', 'serverJs'], function (callback) {
+gulp.task('startNode', ['gulpfile', 'deleteTemp', 'sass', 'clientJs', 'serverJs', 'runMongo'], function (callback) {
   nodemon('-w server server.js')
     .on('restart', onNodeServerRestart)
     .on('log', onNodeServerLog);
@@ -114,6 +114,11 @@ gulp.task('startNode', ['gulpfile', 'deleteTemp', 'sass', 'clientJs', 'serverJs'
 
 gulp.task('startLivereloadServer', function () {
   livereloadServer.listen(LIVERELOAD_PORT);
+});
+
+gulp.task('runMongo', function () {
+  return gulp.src('')
+    .pipe(shell(['mongod &']));
 });
 
 gulp.task('launchProject', ['startNode'], function () {

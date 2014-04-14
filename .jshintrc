@@ -8,6 +8,7 @@
   "camelcase": true,
   "curly": true,
   "eqeqeq": true,
+  "expr": true,
   "freeze": true,
   "immed": true,
   "indent": 2,

@@ -10,9 +10,14 @@ angular.module('akurraApp', [
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:playlistId?', {
+        reloadOnSearch: false,
         controller: 'MainCtrl',
-        templateUrl: 'partials/main'
+        templateUrl: 'partials/main',
+        redirectTo: function (params) {
+          // redirect home if playlistId contains anything but letters, numbers, underscores or hyphens
+          return /[^a-z0-9-_]/i.test(params.playlistId) ? '/' : params.playlistId;
+        }
       })
       .otherwise({
         redirectTo: '/'

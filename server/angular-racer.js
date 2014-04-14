@@ -15,9 +15,11 @@ angular.module('racer.js', [])
     Racer.prototype.init = function (playlistId) {
       var deferred = $q.defer();
 
-      $http.get('/model')
+      $http.get('/playlists/' + playlistId)
         .success(function (data) {
+          console.log(data);
           racerjs.ready(function (model) {
+            console.log(model);
             that.model = model;
             that.isReady = true;
             deferred.resolve(model);

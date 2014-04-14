@@ -9,8 +9,10 @@
 <header>
   <div id="playlist" ng-class="{expanded: playlist.tracks.length}">
     <div class="track" ng-repeat="track in playlist.tracks track by $index">
-      <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
-      <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
+      <a ng-href="{{track.permalink_url}}" target="_blank">
+        <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
+        <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
+      </a>
     </div>
     <volume-button></volume-button>
     <div class="current-track-details">
@@ -23,7 +25,7 @@
 </header>
 
 <div id="search-bar">
-  <input type="text" placeholder="Search Soundcloud" ng-model="search.query" ng-enter="soundCloud.search(search.query)" ng-class="{searching: soundCloud.isSearching}">
+  <input type="text" placeholder="Search Soundcloud" ng-model="search.query" ng-enter="doSearch(search.query)" ng-class="{searching: soundCloud.isSearching}">
   <div class="loading-spinner fade-in-out" ng-show="soundCloud.isSearching">&nbsp;</div>
 </div>
 

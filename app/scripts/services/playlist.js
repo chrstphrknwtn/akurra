@@ -16,9 +16,10 @@ angular.module('akurraApp')
     // Public API
     // ------------------------------------------------------------------------
     Playlist.prototype.createOrJoin = function (id) {
+      this.id = id;
       return Racer.init(id)
         .then(function () {
-          that.tracks = Racer.model.get('entries.tracks');
+          that.tracks = Racer.model.get(that.id + '.tracks');
           tryPlayTrack();
           Racer.model.on('all', function () {
             tryPlayTrack();
@@ -34,7 +35,7 @@ angular.module('akurraApp')
       if (!Racer.isReady || isDuplicate(newTrack)) {
         return false;
       }
-      Racer.model.push('entries.tracks', newTrack);
+      Racer.model.push(that.id + '.tracks', newTrack);
 
       tryPlayTrack(newTrack);
       return true;
@@ -45,9 +46,9 @@ angular.module('akurraApp')
       }
       var index = this.tracks.indexOf(track);
       if (index !== -1) {
-        var removed = Racer.model.shift('entries.tracks');
+        var removed = Racer.model.shift(that.id + '.tracks');
         if (removed !== track) {
-          Racer.model.insert('entries.tracks', 0, track);
+          Racer.model.insert(that.id + '.tracks', 0, track);
         }
       }
       $rootScope.$apply();
