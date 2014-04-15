@@ -123,16 +123,7 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/views/*',
             '<%= yeoman.dist %>/public/*',
             '!<%= yeoman.dist %>/public/.git*',
-          ]
-        }]
-      },
-      heroku: {
-        files: [{
-          dot: true,
-          src: [
-            'heroku/*',
-            '!heroku/.git*',
-            '!heroku/Procfile'
+            '!<%= yeoman.dist %>/public/Procfile',
           ]
         }]
       },
