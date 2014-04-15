@@ -17,7 +17,7 @@
     <volume-button></volume-button>
     <div class="current-track-details">
       <h3><a ng-href="{{player.currentTrack.permalink_url}}" target="_blank">{{player.currentTrack.title}}</a></h3>
-      <h4>{{player.currentTrack.user.username}}</h4>
+      <h4><a href="" ng-click="doSearch(player.currentTrack.user.username)">{{player.currentTrack.user.username}}</a></h4>
     </div>
   </div>
   <div class="progress-bar loaded" style="width:{{ player.loadingProgress | normalizedToPercentage }}"></div>

@@ -122,8 +122,8 @@ module.exports = function (grunt) {
             '.tmp',
             '<%= yeoman.dist %>/views/*',
             '<%= yeoman.dist %>/public/*',
-            '!<%= yeoman.dist %>/public/.git*',
-            '!<%= yeoman.dist %>/public/Procfile',
+            '!<%= yeoman.dist %>/.git',
+            '!<%= yeoman.dist %>/Procfile',
           ]
         }]
       },
