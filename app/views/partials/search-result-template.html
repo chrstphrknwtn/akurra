@@ -1,10 +1,10 @@
 <img class="artwork" ng-src="{{track | scArtwork:300}}" alt="">
 <div class="track-details">
-  <span class="title">{{ track.title }}</span>
+  <a href="" class="title" ng-click="doSearch(track.title);">{{ track.title }}</a>
   <br>
-  <span class="artist">{{ track.user.username }}</span>
+  <a href="" class="artist" ng-click="doSearch(track.user.username);">{{ track.user.username }}</a>
   <br>
   <span class="duration">{{ track.duration | msToDuration }}</span>
   <br>
-  <a class="add-to-playlist" href="" ng-click="playlist.addTrack(track)">Add to Playlist</a><!-- <a href="#">Preview</a> -->
+  <a class="add-to-playlist" href="" ng-click="playlist.addTrack(track)">Add to Playlist</a>
 </div>

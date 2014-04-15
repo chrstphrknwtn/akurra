@@ -8,6 +8,7 @@ angular.module('akurraApp')
     $scope.doSearch = function (query) {
       SoundCloud.search(query);
       $location.search('q', !!query ? query : null);
+      $scope.search.query = query;
     };
 
     $scope.search = {
