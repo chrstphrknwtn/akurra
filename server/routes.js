@@ -1,7 +1,8 @@
 'use strict';
 
-var index = require('./controllers');
-var keys = require('./controllers/keys');
+var index = require('./controllers')
+  , user = require('./controllers/user')
+  , keys = require('./controllers/keys');
 
 /**
  * Application routes
@@ -15,6 +16,8 @@ module.exports = function (app, angularRacer, store) {
   app.get('/keys.json', keys.soundcloud);
 
   app.get('/partials/*', index.partials);
+
+  app.get('/user/id', user.getId);
 
   app.get('/playlists/:playlistId', function (req, res) {
 
