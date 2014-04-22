@@ -22,7 +22,6 @@ angular.module('akurraApp')
       return Racer.init(id)
         .then(function () {
           that.tracks = Racer.model.get(that.tracksPath);
-          console.log(that.tracks);
           tryPlayTrack();
           Racer.model.on('all', function () {
             tryPlayTrack();

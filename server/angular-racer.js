@@ -17,9 +17,7 @@ angular.module('racer.js', [])
 
       $http.get('/playlists/' + playlistId)
         .success(function (data) {
-          console.log(data);
           racerjs.ready(function (model) {
-            console.log(model);
             that.model = model;
             that.isReady = true;
             deferred.resolve(model);
