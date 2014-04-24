@@ -36,7 +36,8 @@
     "soundManager": false,
     "EventEmitter": false,
     "svgIcon": false,
-    "mina": false
+    "mina": false,
+    "Snap": false
   }
 }
 

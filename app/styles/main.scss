@@ -169,15 +169,19 @@ header {
     height: 150px;
   }
 }
-.current-track-details {
-  position: absolute;
-  top: 101px;
-  left: 231px;
+#track-meta {
+  position: relative;
+  left: 167px;
+  top: -63px;
 }
-.volume-button {
-  position: absolute;
-  top: 85px;
-  left: 160px;
+.current-track-details,
+.volume-button,
+.kudos-button {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+[class$=-button] {
   cursor: pointer;
 }
 

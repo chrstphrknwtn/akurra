@@ -14,11 +14,13 @@
         <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
       </a>
     </div>
-    <volume-button></volume-button>
-    <kudos-button></kudos-button>
-    <div class="current-track-details">
-      <h3><a ng-href="{{player.currentTrack.permalink_url}}" target="_blank">{{player.currentTrack.title}}</a></h3>
-      <h4><a href="" ng-click="doSearch(player.currentTrack.user.username)">{{player.currentTrack.user.username}}</a></h4>
+    <div id="track-meta">
+      <volume-button></volume-button>
+      <div class="current-track-details">
+        <h3><a ng-href="{{player.currentTrack.permalink_url}}" target="_blank">{{player.currentTrack.title}}</a></h3>
+        <h4><a href="" ng-click="doSearch(player.currentTrack.user.username)">{{player.currentTrack.user.username}}</a></h4>
+      </div>
+      <kudos-button></kudos-button>
     </div>
   </div>
   <div class="progress-bar loaded" style="width:{{ player.loadingProgress | normalizedToPercentage }}"></div>
