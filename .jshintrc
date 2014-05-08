@@ -31,13 +31,11 @@
   "globals": {
     "_": false,
     "angular": false,
-    "Modernizr": false,
-    "SC": false,
     "soundManager": false,
-    "EventEmitter": false,
-    "svgIcon": false,
+    "SC": false,
+    "Snap": false,
     "mina": false,
-    "Snap": false
+    "EventEmitter": false
   }
 }
 

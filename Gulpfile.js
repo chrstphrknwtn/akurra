@@ -1,6 +1,6 @@
 'use strict';
 
-// npm install -D gulp gulp-util gulp-rimraf gulp-ruby-sass gulp-jshint gulp-autoprefixer gulp-plumber gulp-ngmin gulp-shell tiny-lr-quiet nodemon http open inquirer
+// npm install -D gulp gulp-util gulp-rimraf gulp-ruby-sass gulp-jshint gulp-autoprefixer gulp-plumber gulp-ngmin gulp-shell tiny-lr-quiet nodemon http open inquirer shellscript
 
 /*global shell */
 /*global $ */
@@ -27,7 +27,7 @@ var gulp      = require('gulp')
 
 var HTTP_HOST = 'localhost';
 var HTTP_PORT = process.env.PORT = 9000;
-var NODE_APP_READY_TEST_PATH = '/api/clients/all';
+var NODE_APP_READY_TEST_PATH = '/';
 var LIVERELOAD_PORT = 35729;
 var lr = tinylr();
 lr.listen(LIVERELOAD_PORT);

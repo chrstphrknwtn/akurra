@@ -7,11 +7,13 @@
   "camelcase": true,
   "curly": true,
   "eqeqeq": true,
+  "expr": true,
   "freeze": true,
   "immed": true,
   "indent": 2,
   "latedef": "nofunc",
   "laxcomma": true,
+  "globalstrict": true,
   "newcap": true,
   "noarg": true,
   "nonbsp": true,
@@ -26,8 +28,7 @@
   "white": true,
   "noempty": false,
   "globals": {
-    "angular": false,
-    "window": false
+    "angular": false
   }
 }
 
