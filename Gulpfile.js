@@ -55,8 +55,12 @@ function waitForNode(callback, params) {
       host: HTTP_HOST,
       port: HTTP_PORT,
       path: NODE_APP_READY_TEST_PATH
-    }, function () {
-      callback.apply(callback, params);
+    }, function (data) {
+      if (data.statusCode === 200) {
+        callback.apply(callback, params);
+      } else {
+        waitForNode(callback, params);
+      }
     }).on('error', function () {
       waitForNode(callback, params);
     });
