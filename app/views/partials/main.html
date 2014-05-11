@@ -13,6 +13,7 @@
         <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
         <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
       </a>
+      <span class="remove-icon" ng-if="track.akurraUserId === user.id" ng-click="playlist.removeTrack(track)" ng-include="'images/remove.svg'"></span>
     </div>
     <div id="track-meta">
       <volume-button></volume-button>

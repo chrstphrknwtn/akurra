@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Player', function (Keys, $interval, $rootScope, $log) {
+  .factory('Player', function (Keys, $interval, $rootScope, $log, User) {
 
     var that;
     // ------------------------------------------------------------------------
@@ -26,6 +26,7 @@ angular.module('akurraApp')
       });
     };
     Player.prototype.playTrack = function (track) {
+
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
@@ -41,6 +42,11 @@ angular.module('akurraApp')
           that.emit('finishedPlayback', track);
         }
       });
+    };
+    Player.prototype.stop = function () {
+      soundManager.destroySound(this.currentTrack.id);
+      this.progress = 1;
+      this.isPlaying = false;
     };
     Player.prototype.playPreview = function (track) {
 

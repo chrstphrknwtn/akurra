@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('MainCtrl', function ($scope, $location, Playlist, SoundCloud, Player, $routeParams) {
+  .controller('MainCtrl', function ($scope, $location, Playlist, SoundCloud, Player, User, $routeParams) {
 
     Playlist.createOrJoin($routeParams.playlistId || 'default');
 
@@ -19,7 +19,14 @@ angular.module('akurraApp')
       $scope.doSearch($scope.search.query);
     }
 
+    $scope.removeTrack = function (event, track) {
+      event.stopImmediatePropagation();
+      console.log(event);
+      Playlist.removeTrack(track);
+    };
+
     $scope.soundCloud = SoundCloud;
     $scope.playlist = Playlist;
     $scope.player = Player;
+    $scope.user = User;
   });

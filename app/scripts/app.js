@@ -25,7 +25,10 @@ angular.module('akurraApp', [
 
     $locationProvider.html5Mode(true);
   })
-  .run(function (Keys, SoundCloud, Player, Playlist) {
+  .run(function (Keys, SoundCloud, Player, Playlist, User) {
+
+    User.init();
+
     Player.init();
 
     Keys.get()

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Playlist', function (SoundCloud, Player, Racer, $rootScope) {
+  .factory('Playlist', function (SoundCloud, Player, Racer, User, $timeout, $rootScope) {
 
     var that;
     // ------------------------------------------------------------------------
@@ -23,20 +23,16 @@ angular.module('akurraApp')
         .then(function () {
           that.tracks = Racer.model.get(that.tracksPath);
           tryPlayTrack();
-          Racer.model.on('all', function () {
-            tryPlayTrack();
-          });
-          Racer.model.on('error', function (err) {
-            console.log('------------ RacerJS Model error --------------');
-            console.log(err);
-            console.log('-----------------------------------------------');
-          });
+          Racer.model.on('all', tryPlayTrack);
+          Racer.model.on('remove', onTrackRemoved);
+          Racer.model.on('error', onRacerError);
         });
     };
     Playlist.prototype.addTrack = function (newTrack) {
       if (!Racer.isReady || isDuplicate(newTrack)) {
         return false;
       }
+      newTrack.akurraUserId = User.id;
       Racer.model.push(that.tracksPath, newTrack);
 
       tryPlayTrack(newTrack);
@@ -46,34 +42,57 @@ angular.module('akurraApp')
       if (!Racer.isReady) {
         return false;
       }
-      var index = this.tracks.indexOf(track);
-      if (index !== -1) {
-        var removed = Racer.model.shift(that.tracksPath);
-        if (removed !== track) {
-          Racer.model.insert(that.tracksPath, 0, track);
-        }
+      if (track === Player.currentTrack) {
+        Player.stop();
       }
-      $rootScope.$apply();
+      console.log('[Playlist.removeTrack] ', this.tracks.indexOf(track));
+
+      var index = this.tracks.indexOf(track);
+      Racer.model.remove(that.tracksPath, index, 1);
+
+      if (this.tracks.length) {
+        tryPlayTrack();
+      }
     };
     // ------------------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------------------
+    function onTrackRemoved(path, details) {
+      if (details &&
+          details[1] &&
+          details[1] &&
+          details[1][0].id &&
+          details[1][0].id === Player.currentTrack.id) {
+        Player.stop();
+        tryPlayTrack();
+      }
+      $timeout(function() {
+        $rootScope.$apply();
+      });
+    }
+    function onRacerError(err) {
+      console.log('------------ RacerJS Model error --------------');
+      console.log(err);
+      console.log('-----------------------------------------------');
+    }
+
     Player.on('finishedPlayback', function (track) {
+      console.log('[Playlist finishedPlayback]');
       that.removeTrack(track);
       tryPlayTrack();
     });
 
     function tryPlayTrack() {
+      console.log('[Playlist.tryPlayTrack] ', !!(!Player.isPlaying && that.tracks && that.tracks.length));
       if (!Player.isPlaying && that.tracks && that.tracks.length) {
         Player.playTrack(that.tracks[0]);
       }
     }
 
     function isDuplicate(newTrack) {
-      return false;
-      // return _.find(that.tracks, function (track) {
-      //   return track.id === newTrack.id;
-      // });
+      return _.find(that.tracks, function (track) {
+        return track.id === newTrack.id;
+      });
     }
     return new Playlist();
   });
