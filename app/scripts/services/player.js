@@ -25,8 +25,10 @@ angular.module('akurraApp')
         debugMode: false
       });
     };
-    Player.prototype.playTrack = function (track) {
-
+    Player.prototype.playTrack = function (track, startPosition) {
+      if (!startPosition) {
+        startPosition = 0;
+      }
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
@@ -42,6 +44,8 @@ angular.module('akurraApp')
           that.emit('finishedPlayback', track);
         }
       });
+      soundManager.setPosition(track.id, startPosition);
+      soundManager.play(track.id);
     };
     Player.prototype.stop = function () {
       soundManager.destroySound(this.currentTrack.id);
@@ -90,7 +94,7 @@ angular.module('akurraApp')
 
     soundManager.defaultOptions = {
       autoLoad: true,
-      autoPlay: true,
+      autoPlay: false,
       whileloading: function () {
         that.loadingProgress = this.bytesLoaded / this.bytesTotal;
         $rootScope.$apply();
