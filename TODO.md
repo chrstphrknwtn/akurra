@@ -2,7 +2,7 @@
 ~~move playlist to top~~  
 ~~create new playlist on route~~  
 add time sync  
-finish remove track functionality  
+~~finish remove track functionality~~  
 finish love track functionality  
 abide by soundcloud API rules  
 add track preview to search  
