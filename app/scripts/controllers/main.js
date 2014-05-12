@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .controller('MainCtrl', function ($scope, $location, Playlist, SoundCloud, Player, User, $routeParams) {
+  .controller('MainCtrl', function ($scope, $location, Playlist, SoundCloud, Player, User, $routeParams, Modal) {
 
     Playlist.createOrJoin($routeParams.playlistId || 'default');
 
@@ -28,5 +28,6 @@ angular.module('akurraApp')
     $scope.soundCloud = SoundCloud;
     $scope.playlist = Playlist;
     $scope.player = Player;
+    $scope.modal = Modal;
     $scope.user = User;
   });

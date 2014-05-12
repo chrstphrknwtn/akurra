@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="akurraApp"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,13 +25,15 @@
     <script src="//cdn.jsdelivr.net/soundmanager2/2.97a.20131201/soundmanager2-jsmin.js"></script>
     <script src="//connect.soundcloud.com/sdk.js"></script>
   </head>
-  <body ng-app="akurraApp">
+  <body ng-class="{'modal-open': modal.isOpen}">
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <div class="container" ng-view></div>
+
+    <modal content="{{modal.current}}"></modal>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -81,7 +83,9 @@
         <script src="scripts/directives/searchresult.js"></script>
         <script src="scripts/directives/volumebutton.js"></script>
         <script src="scripts/directives/kudosbutton.js"></script>
+        <script src="scripts/directives/modal.js"></script>
         <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/modal.js"></script>
         <!-- endbuild -->
         <script src="/angular-racer.js"></script>
 </body>

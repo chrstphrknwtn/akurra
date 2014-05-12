@@ -82,6 +82,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+body.modal-open {
+  overflow: hidden;
+}
 
 * { box-sizing: border-box }
 
@@ -187,13 +190,19 @@ header {
 }
 .current-track-details,
 .volume-button,
-.kudos-button {
+.kudos-button,
+.help-button {
   display: inline-block;
   vertical-align: middle;
   margin-right: 8px;
 }
 [class$=-button] {
   cursor: pointer;
+}
+.help-button {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
 }
 
 header + * {
@@ -310,5 +319,39 @@ search-result {
     .track-details {
       opacity: 1;
     }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.8);
+  user-select: none;
+}
+.modal {
+  z-index: 10000;
+  display: block;
+  text-align: center;
+  pointer-events: none;
+  &:before {
+    z-index: 11000;
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+  .modal-content {
+    z-index: 12000;
+    border-radius: 4px;
+    pointer-events: all;
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    max-width: 480px;
+    padding-bottom:10px;
+    overflow: hidden;
   }
 }
