@@ -1,10 +1,18 @@
 'use strict';
 
 angular.module('akurraApp')
-  .directive('kudosButton', function () {
+  .directive('kudosButton', function (Player) {
 
     var heart;
     var scale = 0.5;
+
+    function reset() {
+      var beatMatrix = new Snap.Matrix();
+      scale = 0.5;
+      beatMatrix.scale(scale, scale, 32, 40);
+      heart.animate({transform: beatMatrix}, 500);
+      heart.animate({fill: '#444444'}, 500);
+    }
 
     function beat() {
       if (scale < 0.99) {
@@ -37,6 +45,9 @@ angular.module('akurraApp')
           svg.append(heart);
           heart.transform(startMatrix);
         });
+
+        Player.on('startedPlayback', reset);
+        Player.on('finishedPlayback', reset);
 
         element.on('click', function () {
           beat();
