@@ -15,6 +15,7 @@ var gulp      = require('gulp')
   , plumber   = require('gulp-plumber')
   , ngmin     = require('gulp-ngmin')
   , gulpShell = require('gulp-shell')
+  , gulpLR    = require('gulp-livereload')
 
   , tinylr    = require('tiny-lr-quiet')
   , nodemon   = require('nodemon')
@@ -88,7 +89,7 @@ function spawnProcess(cmd, args, exitCallback) {
 ///////////////////////////////////////////////
 gulp.task('default', ['serve']);
 gulp.task('go', ['serve', 'launchProject']);
-gulp.task('serve', ['gulpfile', 'cleanTmp', 'sass', 'serverJs', 'clientJs', 'startNode', 'watch'], function () {
+gulp.task('serve', ['gulpfile', 'wiredep', 'cleanTmp', 'sass', 'serverJs', 'clientJs', 'startNode', 'watch'], function () {
   reload(); // TODO: make this work consistantly
 });
 
@@ -105,13 +106,17 @@ gulp.task('cleanTmp', function () {
     .pipe(rimraf());
 });
 
-gulp.task('sass', ['cleanTmp', 'wiredep'], function () {
+gulp.task('sass', ['cleanTmp'], function () {
   return gulp.src('app/styles/main.scss')
     .pipe(plumber())
     .pipe(sass({loadPath: ['app/bower_components']}))
     .on('error', err)
     .pipe(prefix('last 2 versions'))
-    .pipe(gulp.dest('.tmp/styles'));
+    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulpLR(lr))
+    .on('end', function () {
+      console.log('[' + gutil.colors.blue('LiveReload') + '] app/styles/main.scss');
+    });
 });
 
 gulp.task('serverJs', function () {
@@ -132,7 +137,7 @@ gulp.task('clientJs', function () {
 
 
 gulp.task('startNode', ['gulpfile', 'cleanTmp', 'sass', 'clientJs', 'serverJs'], function (callback) {
-  nodemon('server.js --watch server --watch server.js --ignore node_modules/')
+  nodemon('--debug server.js --watch server --watch server.js --ignore node_modules/')
     .on('restart', onNodeServerRestart)
     .on('log', onNodeServerLog)
     .on('start', onNodeServerStart);
@@ -166,8 +171,7 @@ gulp.task('watch', ['sass', 'serverJs', 'clientJs'], function () {
   gulp.watch([
     'app/views/**/*.html',
     'app/scripts/**/*.js',
-    'app/images/**/*.*',
-    '.tmp/styles/**/*.css'
+    'app/images/**/*.*'
   ], reload);
 
   gulp.watch('app/styles/**/*.scss', ['sass']);
