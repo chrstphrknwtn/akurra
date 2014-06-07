@@ -49,7 +49,6 @@ angular.module('akurraApp')
 
       var index = this.tracks.indexOf(track);
       Racer.model.remove(that.tracksPath, index, 1);
-
       if (this.tracks.length) {
         tryPlayTrack();
       }
@@ -62,9 +61,9 @@ angular.module('akurraApp')
           details[1] &&
           details[1] &&
           details[1][0].id &&
+          Player.currentTrack &&
           details[1][0].id === Player.currentTrack.id) {
         Player.stop();
-        tryPlayTrack();
       }
       $timeout(function() {
         $rootScope.$apply();
@@ -75,16 +74,20 @@ angular.module('akurraApp')
       console.log(err);
       console.log('-----------------------------------------------');
     }
+    Player.on('loadError', function (track) {
+      console.log('[Playlist loadError]');
+      that.removeTrack(track);
+    });
 
     Player.on('finishedPlayback', function (track) {
       console.log('[Playlist finishedPlayback]');
       that.removeTrack(track);
-      tryPlayTrack();
     });
 
     function tryPlayTrack() {
-      console.log('[Playlist.tryPlayTrack] ', !!(!Player.isPlaying && that.tracks && that.tracks.length));
-      if (!Player.isPlaying && that.tracks && that.tracks.length) {
+      var canPlay = !!(!Player.isPlaying && that.tracks && that.tracks.length);
+      console.log('[Playlist.tryPlayTrack] ', canPlay);
+      if (canPlay) {
         Player.playTrack(that.tracks[0]);
       }
     }
