@@ -2,7 +2,7 @@
 ~~move playlist to top~~  
 ~~create new playlist on route~~  
 ~~finish remove track functionality~~  
-~~fix mystery breaking tracks https://soundcloud.com/iggy-azalea-official/fancy-mistajam  ~~
+~~fix mystery breaking tracks https://soundcloud.com/iggy-azalea-official/fancy-mistajam~~  
 ~~power searching~~  
 
 finish love track functionality  
