@@ -32,6 +32,7 @@ angular.module('akurraApp')
 
       that.isSearching = false;
 
+
       var filteredTracks = _.filter(tracks, function (track) {
         return track.streamable;
       });

@@ -8,7 +8,7 @@ angular.module('akurraApp', [
   'ngAnimate',
   'racer.js'
 ])
-  .config(function ($routeProvider, $locationProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/:playlistId?', {
         reloadOnSearch: false,

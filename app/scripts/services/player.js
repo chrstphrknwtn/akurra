@@ -103,6 +103,10 @@ angular.module('akurraApp')
       }
     };
 
+    soundManager.onerror = function (a, b, c, d, e) {
+      debugger;
+    };
+
     return new Player();
   });
 
