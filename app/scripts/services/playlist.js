@@ -85,13 +85,14 @@ angular.module('akurraApp')
       console.log('-----------------------------------------------');
     }
     function updatePulse(pulse) {
-      $http.put('/user/pulse', {
-        path: usersPath,
-        id: User.id,
-        name: that.name,
-        pulse: pulse
-      })
-      .success(updateNumUsers);
+      Racer.model.set([usersPath, User.id, 'pulse'].join('.'), pulse);
+      // $http.put('/user/pulse', {
+      //   path: usersPath,
+      //   id: User.id,
+      //   name: that.name,
+      //   pulse: pulse
+      // })
+      // .success(updateNumUsers);
     }
     function updateNumUsers(serverEpoch) {
       var allTimestamps = _.pluck(that.users, 'timestamp');
