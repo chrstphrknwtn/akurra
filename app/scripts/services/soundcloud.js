@@ -20,16 +20,57 @@ angular.module('akurraApp')
       SC.initialize(keys);
     };
     SoundCloud.prototype.search = function (query) {
-      if (!!query) {
-        this.isSearching = true;
-        SC.get('/tracks', { q: query, limit: 200 }, onSearchComplete);
+      if (!query) return;
+
+      var searchEndpoint = '/tracks'; // default to be overridden for power searching
+      var searchOptions = {
+        q: query,
+        limit: 200
+      };
+
+      var powerSearch = query.match(/(^user|likes|like|genres|genre|label|tags|tag)(?::)(?:\s*)(.*)/i);
+
+      if (powerSearch) {
+        var powerSearchType = powerSearch[1].toLowerCase();
+        var powerSearchQuery = powerSearch[2];
+
+        if (!searchOptions.q) return;
+
+        switch (powerSearchType) {
+          case 'user':
+            searchOptions.q = null;
+            var userID = 2784016;
+            searchEndpoint = '/users/' + userID + '/tracks';
+            break;
+          case 'like':
+          case 'likes':
+            console.log('banana');
+            searchOptions.q = null;
+            var userID = 2784016;
+            searchEndpoint = '/users/' + userID + '/favorites';
+            break;
+          case 'genre':
+          case 'genres':
+            searchOptions.q = null;
+            searchOptions.genres = powerSearchQuery.replace(/(,\s*)/g, ',');
+            break;
+          case 'tag':
+          case 'tags':
+            searchOptions.q = null;
+            searchOptions.tags = powerSearchQuery.replace(/(,\s*)/g, ',');
+            break;
+        }
       }
+      searchSoundcloud(searchEndpoint, searchOptions);
     };
     // ------------------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------------------
+    function searchSoundcloud(searchEndpoint, searchOptions) {
+      that.isSearching = true;
+      SC.get(searchEndpoint, searchOptions, onSearchComplete);
+    }
     function onSearchComplete(tracks, err) {
-
       that.isSearching = false;
 
 
