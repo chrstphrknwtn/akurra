@@ -27,37 +27,36 @@ angular.module('akurraApp')
         q: query,
         limit: 200
       };
-
       var powerSearch = query.match(/(^user|likes|like|genres|genre|label|tags|tag)(?::)(?:\s*)(.*)/i);
+      var userID;
 
       if (powerSearch) {
         var powerSearchType = powerSearch[1].toLowerCase();
-        var powerSearchQuery = powerSearch[2];
+        var powerSearchQuery = powerSearch[2].replace(/(,\s*)/g, ',');
 
         if (!searchOptions.q) return;
+        searchOptions.q = null;
 
         switch (powerSearchType) {
           case 'user':
-            searchOptions.q = null;
-            var userID = 2784016;
-            searchEndpoint = '/users/' + userID + '/tracks';
+            // var resolveUrl = 'http://soundcloud.com/' + powerSearchQuery;
+            // SC.get('/resolve', {url: resolveUrl}, function(user) {
+            //   if (user) userID = user.id;
+            // });
+            searchEndpoint = '/users/' + '2784016' + '/tracks';
             break;
           case 'like':
           case 'likes':
-            console.log('banana');
-            searchOptions.q = null;
-            var userID = 2784016;
+            userID = 2784016;
             searchEndpoint = '/users/' + userID + '/favorites';
             break;
           case 'genre':
           case 'genres':
-            searchOptions.q = null;
-            searchOptions.genres = powerSearchQuery.replace(/(,\s*)/g, ',');
+            searchOptions.genres = powerSearchQuery;
             break;
           case 'tag':
           case 'tags':
-            searchOptions.q = null;
-            searchOptions.tags = powerSearchQuery.replace(/(,\s*)/g, ',');
+            searchOptions.tags = powerSearchQuery;
             break;
         }
       }

@@ -6,7 +6,7 @@
 
   "bitwise": false,
   "camelcase": true,
-  "curly": true,
+  "curly": false,
   "eqeqeq": true,
   "expr": true,
   "freeze": true,
