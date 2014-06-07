@@ -35,32 +35,37 @@ angular.module('akurraApp')
         var powerSearchQuery = powerSearch[2].replace(/(,\s*)/g, ',');
 
         if (!searchOptions.q) return;
+        that.isSearching = true;
         searchOptions.q = null;
 
         switch (powerSearchType) {
           case 'user':
-            // var resolveUrl = 'http://soundcloud.com/' + powerSearchQuery;
-            // SC.get('/resolve', {url: resolveUrl}, function(user) {
-            //   if (user) userID = user.id;
-            // });
-            searchEndpoint = '/users/' + '2784016' + '/tracks';
+            getUserId(powerSearchQuery, function (userID) {
+              searchEndpoint = '/users/' + userID + '/tracks';
+              searchSoundcloud(searchEndpoint, searchOptions);
+            });
             break;
           case 'like':
           case 'likes':
-            userID = 2784016;
-            searchEndpoint = '/users/' + userID + '/favorites';
+            getUserId(powerSearchQuery, function (userID) {
+              searchEndpoint = '/users/' + userID + '/favorites';
+              searchSoundcloud(searchEndpoint, searchOptions);
+            });
             break;
           case 'genre':
           case 'genres':
             searchOptions.genres = powerSearchQuery;
+            searchSoundcloud(searchEndpoint, searchOptions);
             break;
           case 'tag':
           case 'tags':
             searchOptions.tags = powerSearchQuery;
+            searchSoundcloud(searchEndpoint, searchOptions);
             break;
         }
+      } else {
+        searchSoundcloud(searchEndpoint, searchOptions);
       }
-      searchSoundcloud(searchEndpoint, searchOptions);
     };
     SoundCloud.prototype.generateArtwork = function() {
       var colors = [
@@ -82,8 +87,13 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------------------
+    function getUserId(query, cb) {
+      var resolveUrl = 'http://soundcloud.com/' + query;
+      SC.get('/resolve', {url: resolveUrl}, function (user) {
+        if (user) cb(user.id);
+      });
+    }
     function searchSoundcloud(searchEndpoint, searchOptions) {
-      that.isSearching = true;
       SC.get(searchEndpoint, searchOptions, onSearchComplete);
     }
     function onSearchComplete(tracks, err) {
