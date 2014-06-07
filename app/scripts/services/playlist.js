@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('akurraApp')
-  .factory('Playlist', function (SoundCloud, Player, Racer, User, $timeout, $rootScope) {
+  .factory('Playlist', function (SoundCloud, Player, Racer, User, $timeout, $rootScope, $http) {
 
     var that;
     var tracksPath;
@@ -16,7 +16,8 @@ angular.module('akurraApp')
         tracksPath: null,
         usersPath: null,
         tracks: [],
-        users: {}
+        users: {},
+        numUsers: 0
       });
     }
     // ------------------------------------------------------------------------
@@ -84,10 +85,21 @@ angular.module('akurraApp')
       console.log('-----------------------------------------------');
     }
     function updatePulse(pulse) {
-      Racer.model.set([usersPath, User.id, 'pulse'].join('.'), pulse);
-      _.forEach(that.users, function (user, key) {
-        console.log(key, user.pulse);
+      $http.put('/user/pulse', {
+        path: usersPath,
+        id: User.id,
+        name: that.name,
+        pulse: pulse
+      })
+      .success(updateNumUsers);
+    }
+    function updateNumUsers(serverEpoch) {
+      var allTimestamps = _.pluck(that.users, 'timestamp');
+      var alive = _.filter(allTimestamps, function (timestamp) {
+        return serverEpoch - timestamp < 3000;
       });
+
+      that.numUsers = alive.length > 0 ? alive.length : 1;
     }
     function getHighestProgress() {
       return _(that.users).pluck('pulse').max().value();

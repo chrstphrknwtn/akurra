@@ -28,14 +28,15 @@ angular.module('akurraApp')
       });
     };
     Player.prototype.playTrack = function (track, startPosition) {
+
       var then = Date.now();
+
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
         volume: globalVolume,
         onload: function (success) {
           if (success) {
-            console.log('loaded!');
             var diff = Date.now() - then;
             soundManager.setPosition(track.id, startPosition && startPosition + diff || 0);
             soundManager.play(track.id);

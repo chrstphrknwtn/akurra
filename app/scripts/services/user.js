@@ -25,11 +25,15 @@ angular.module('akurraApp')
           that.id = $cookies.akurraUserId = id;
         });
     };
+    User.prototype.pulse = function () {
+      // move it to here
+    };
     User.prototype.simplified = function () {
       return {
         name: that.name,
-        pulse: 0
-      }
+        pulse: 0,
+        timestamp: 0
+      };
     };
 
     return new User();
