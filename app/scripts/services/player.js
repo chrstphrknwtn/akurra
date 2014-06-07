@@ -7,16 +7,18 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    var Player = function () {
-      _.mixin(this, new EventEmitter());
+    function Player() {
       that = this;
-      this.isPlaying = false;
-      this.currentTrack = null;
-      this.isMuted = false;
-      this.progress = 0;
-      this.position = 0;
-      this.loadingProgress = 0;
-    };
+      _.assign(this, EventEmitter.prototype);
+      _.assign(this, {
+        isPlaying: false,
+        isMuted: false,
+        currentTrack: null,
+        position: 0,
+        progress: 0,
+        loadingProgress: 0
+      });
+    }
     // ------------------------------------------------------------------------
     // Public API
     // ------------------------------------------------------------------------
@@ -26,17 +28,20 @@ angular.module('akurraApp')
       });
     };
     Player.prototype.playTrack = function (track, startPosition) {
+      var then = Date.now();
       soundManager.createSound({
         id: track.id,
         url: track.stream_url + '?client_id=' + Keys.soundcloud.client_id, // jshint ignore:line
         volume: globalVolume,
         onload: function (success) {
-          if (!success) {
+          if (success) {
+            console.log('loaded!');
+            var diff = Date.now() - then;
+            soundManager.setPosition(track.id, startPosition && startPosition + diff || 0);
+            soundManager.play(track.id);
+          } else {
             soundManager.destroySound(track.id);
             that.emit('loadError', track);
-          } else {
-            soundManager.setPosition(track.id, startPosition || 0);
-            soundManager.play(track.id);
           }
         },
         onplay: function () {
@@ -104,14 +109,11 @@ angular.module('akurraApp')
         $rootScope.$apply();
       },
       whileplaying: function () {
+        that.emit('tick', this.position);
         that.progress = this.position / this.duration;
         that.position = this.position;
         $rootScope.$apply();
       }
-    };
-
-    soundManager.onerror = function (a, b, c, d, e) {
-      debugger;
     };
 
     return new Player();

@@ -8,11 +8,13 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    var SoundCloud = function () {
+    function SoundCloud() {
       that = this;
-      this.isSearching = false;
-      this.searchResults = [];
-    };
+      _.assign(this, {
+        isSearching: false,
+        searchResults: []
+      });
+    }
     // ------------------------------------------------------------------------
     // Public API
     // ------------------------------------------------------------------------

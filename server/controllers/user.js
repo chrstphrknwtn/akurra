@@ -2,6 +2,6 @@
 
 module.exports = {
   getId: function (req, res) {
-    res.send([Date.now(), ~~(Math.random() * 1000)].join(''));
+    res.send(['u', Date.now(), ~~(Math.random() * 1000)].join(''));
   }
 };

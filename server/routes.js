@@ -39,6 +39,9 @@ module.exports = function (app, angularRacer, store) {
         if (!playlist.get('tracks')) {
           playlist.set('tracks', []);
         }
+        if (!playlist.get('users')) {
+          playlist.set('users', {});
+        }
 
         model.bundle(function (err, bundle) {
           if (err) {

@@ -4,28 +4,38 @@ angular.module('akurraApp')
   .factory('Playlist', function (SoundCloud, Player, Racer, User, $timeout, $rootScope) {
 
     var that;
+    var tracksPath;
+    var usersPath;
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    var Playlist = function () {
+    function Playlist () {
       that = this;
-      this.id = '';
-      this.tracksPath = '';
-      this.tracks = [];
-    };
+      _.assign({
+        id: null,
+        tracksPath: null,
+        usersPath: null,
+        tracks: [],
+        users: {}
+      });
+    }
     // ------------------------------------------------------------------------
     // Public API
     // ------------------------------------------------------------------------
     Playlist.prototype.createOrJoin = function (id) {
       this.id = id;
-      this.tracksPath = 'playlists.' + id + '.tracks';
+      tracksPath = ['playlists', id, 'tracks'].join('.');
+      usersPath = ['playlists', id, 'users'].join('.');
       return Racer.init(id)
         .then(function () {
-          that.tracks = Racer.model.get(that.tracksPath);
-          tryPlayTrack();
-          Racer.model.on('all', tryPlayTrack);
-          Racer.model.on('remove', onTrackRemoved);
+          that.tracks = Racer.model.get(tracksPath);
+          that.users = Racer.model.get(usersPath);
+
+          Racer.model.set([usersPath, User.id].join('.'), User.simplified());
+          Racer.model.on('all', tracksPath, tryPlayTrack);
+          Racer.model.on('remove', tracksPath, onTrackRemoved);
           Racer.model.on('error', onRacerError);
+          tryPlayTrack(getHighestProgress());
         });
     };
     Playlist.prototype.addTrack = function (newTrack) {
@@ -33,7 +43,7 @@ angular.module('akurraApp')
         return false;
       }
       newTrack.akurraUserId = User.id;
-      Racer.model.push(that.tracksPath, newTrack);
+      Racer.model.push(tracksPath, newTrack);
 
       tryPlayTrack(newTrack);
       return true;
@@ -48,7 +58,7 @@ angular.module('akurraApp')
       console.log('[Playlist.removeTrack] ', this.tracks.indexOf(track));
 
       var index = this.tracks.indexOf(track);
-      Racer.model.remove(that.tracksPath, index, 1);
+      Racer.model.remove(tracksPath, index, 1);
       if (this.tracks.length) {
         tryPlayTrack();
       }
@@ -56,13 +66,12 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     // Private helpers
     // ------------------------------------------------------------------------
-    function onTrackRemoved(path, details) {
-      if (details &&
-          details[1] &&
-          details[1] &&
-          details[1][0].id &&
+    function onTrackRemoved(path, removed) {
+      if (removed &&
+          removed[0] &&
+          removed[0].id &&
           Player.currentTrack &&
-          details[1][0].id === Player.currentTrack.id) {
+          removed[0].id === Player.currentTrack.id) {
         Player.stop();
       }
       $timeout(function() {
@@ -74,6 +83,16 @@ angular.module('akurraApp')
       console.log(err);
       console.log('-----------------------------------------------');
     }
+    function updatePulse(pulse) {
+      Racer.model.set([usersPath, User.id, 'pulse'].join('.'), pulse);
+      _.forEach(that.users, function (user, key) {
+        console.log(key, user.pulse);
+      });
+    }
+    function getHighestProgress() {
+      return _(that.users).pluck('pulse').max().value();
+    }
+
     Player.on('loadError', function (track) {
       console.log('[Playlist loadError]');
       that.removeTrack(track);
@@ -84,11 +103,14 @@ angular.module('akurraApp')
       that.removeTrack(track);
     });
 
-    function tryPlayTrack() {
+    var throttledUpdatePulse = _.throttle(updatePulse, 1000);
+    Player.on('tick', throttledUpdatePulse);
+
+    function tryPlayTrack(position) {
       var canPlay = !!(!Player.isPlaying && that.tracks && that.tracks.length);
       console.log('[Playlist.tryPlayTrack] ', canPlay);
       if (canPlay) {
-        Player.playTrack(that.tracks[0]);
+        Player.playTrack(that.tracks[0], position || 0);
       }
     }
 

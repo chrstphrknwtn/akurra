@@ -9,7 +9,10 @@ angular.module('akurraApp')
     // ------------------------------------------------------------------------
     function User() {
       that = this;
-      this.id = null;
+      _.assign(this, {
+        id: null,
+        name: null
+      });
     }
 
     // ------------------------------------------------------------------------
@@ -21,6 +24,12 @@ angular.module('akurraApp')
         .success(function (id) {
           that.id = $cookies.akurraUserId = id;
         });
+    };
+    User.prototype.simplified = function () {
+      return {
+        name: that.name,
+        pulse: 0
+      }
     };
 
     return new User();

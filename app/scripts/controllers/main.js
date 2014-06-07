@@ -21,7 +21,6 @@ angular.module('akurraApp')
 
     $scope.removeTrack = function (event, track) {
       event.stopImmediatePropagation();
-      console.log(event);
       Playlist.removeTrack(track);
     };
 
