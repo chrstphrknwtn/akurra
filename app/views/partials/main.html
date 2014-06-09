@@ -8,12 +8,14 @@
 
 <header>
   <div id="playlist" ng-class="{expanded: playlist.tracks.length}">
-    <div class="track" ng-repeat="track in playlist.tracks track by $index">
-      <a ng-href="{{track.permalink_url}}" target="_blank">
-        <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
-        <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
-      </a>
-      <span class="remove-icon" ng-if="track.akurraUserId === user.id" ng-click="playlist.removeTrack(track)" ng-include="'images/remove.svg'"></span>
+    <div class="track-wrapper" ng-repeat="track in playlist.tracks track by $index">
+      <div class="track">
+        <a ng-href="{{track.permalink_url}}" target="_blank">
+          <img ng-if="$first" ng-src="{{track | scArtwork:300}}" alt="">
+          <img ng-if="!$first" ng-src="{{track | scArtwork:100}}" alt="">
+        </a>
+        <span class="remove-icon" ng-if="track.akurraUserId === user.id" ng-click="playlist.removeTrack(track)" ng-include="'images/remove.svg'"></span>
+      </div>
     </div>
     <div id="track-meta">
       <volume-button></volume-button>

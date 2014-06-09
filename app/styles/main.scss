@@ -75,7 +75,7 @@ body {
 }
 body {
   background: whitesmoke;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Lucida Grande", sans-serif;
   font-weight: 300;
   font-size: 14px;
   color: $nearlyBlack;
@@ -149,28 +149,58 @@ header {
   position: relative;
   z-index: 1000;
   white-space: nowrap;
-  margin-top: -145px;
+  margin-top: -148px;
   height: 150px;
   transition: margin-top 0.2s ease;
   &.expanded {
     margin-top: 0;
   }
+  .track-wrapper {
+    position: relative;
+    display: inline-block;
+    perspective: 1000px;
+    margin-left: -40px;
+    transition: margin 0.2s ease, transform 0.2s ease;
+    &:hover {
+      margin-left: 1px;
+      .track {
+        transform: rotateY(0);
+      }
+      img {
+        opacity: 1;
+      }
+    }
+  }
+  .track-wrapper:first-child {
+    margin-left: 0;
+    .track {
+      transform: rotateY(0);
+    }
+    img {
+      opacity: 1;
+    }
+  }
+  @for $i from 1 through 50 {
+    .track-wrapper:nth-child(#{$i}) {
+      z-index: 100 - $i;
+    }
+  }
   .track {
     position: relative;
     display: inline-block;
     vertical-align: top;
-    margin-left: 5px;
-    width: 74px;
-    height: 74px;
+    width: 136px;
+    height: 136px;
+    box-shadow: 0 0 20px rgba(0,0,0,1);
+    background-color: black;
     img {
       width: 100%;
       height: 100%;
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
     }
-  }
-  .track:first-child {
-    margin-left: 5px;
-    width: 150px;
-    height: 150px;
+    transform: rotateY(-25deg);
+    transition: margin 0.2s ease, transform 0.2s ease;
   }
 }
 #track-meta {
@@ -324,6 +354,7 @@ search-result {
 
 .modal-overlay {
   position: fixed;
+  z-index: 9999;
   top: 0;
   right: 0;
   bottom: 0;
