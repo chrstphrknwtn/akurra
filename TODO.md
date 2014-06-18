@@ -11,4 +11,6 @@ add track preview to search
 see the number of people in a room  
 add warning if track length > 10mins  
 ~~add time sync~~  
-turn main page into porthole for active rooms  
+turn main page into portal for active rooms  
+integrate power search with results usernames  
+clean up interface / css
