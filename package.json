@@ -1,0 +1,14 @@
+{
+  "name": "banana",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^3.4.0"
+  },
+  "devDependencies": {
+    "budo": "^9.2.0"
+  },
+  "scripts": {
+    "start": "budo index.js --live"
+  }
+}
