@@ -1,8 +1,8 @@
+require('whatwg-fetch')
 const firebase = require('firebase/app')
-require('firebase/database');
+require('firebase/database')
 
 const config = require('./config.json')
-const track = require('./sc-track.json')
 
 firebase.initializeApp(config.firebase)
 
@@ -22,4 +22,8 @@ const channel = {
   }
 }
 
-channel.create('peach')
+fetch(`http://api.soundcloud.com/tracks/235287251?client_id=${config.soundcloud.client_id}`)
+.then(res => res.json())
+.then(track => {
+  channel.addTrack('banana', track)
+})
