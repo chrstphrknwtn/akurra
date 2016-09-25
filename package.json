@@ -3,13 +3,15 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "bel": "4.4.3",
     "firebase": "^3.4.0",
+    "uri-router": "3.0.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "budo": "^9.2.0"
   },
   "scripts": {
-    "start": "budo index.js --live"
+    "start": "budo index.js --live --title Akurra --pushstate"
   }
 }
