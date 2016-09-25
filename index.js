@@ -1,7 +1,7 @@
 const createChannel = require('./lib/create-channel')
-require('whatwg-fetch')
 const firebase = require('firebase/app')
 require('firebase/database')
+require('whatwg-fetch')
 
 const config = require('./config.json')
 
