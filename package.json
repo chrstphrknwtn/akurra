@@ -4,7 +4,6 @@
   "main": "index.js",
   "dependencies": {
     "firebase": "^3.4.0",
-    "soundcloud": "^3.1.2",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
